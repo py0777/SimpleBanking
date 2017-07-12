@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 외부 프로퍼티 파일 로드및 공통 프로퍼티 정의 -->
+	<properties resource="mybatis.properties">
+	<!--properties url="file:d:\mybatis.properties"-->
+	  
+	  <property name="jdbc.driver" value="com.mysql.jdbc.Driver" />
+	  <property name="jdbc.username" value="root"/>
+	  <property name="jdbc.password" value="1111"/>
+	</properties>
+
+	<!-- 마이바티스의 작동 규칙정의 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+	</settings>
+	
+	<!-- 타입별칭 
+	객체 만들면 사용해야지
+	<typeAliases>
+		<typeAlias type="ldg.mybatis.model.Comment" alias="Comment" />
+		<typeAlias type="ldg.mybatis.model.User" alias="User" />
+		<typeAlias type="ldg.mybatis.model.Reply" alias="Reply" />
+		<typeAlias type="ldg.mybatis.model.CommentUser" alias="CommentUser" />
+		<typeAlias type="ldg.mybatis.model.CommentReplies" alias="CommentReplies" />
+	</typeAliases>
+	-->
+	
+	<!-- 타입핸들러 -->
+	<!--typeHandlers>
+		<package name="ldg.mybatis.common.type"/>
+	</typeHandlers-->
+	
+	<!-- 플러그인 -->
+	<plugins>
+		<plugin interceptor="mm.common.plugin.ExecutorPlugin">
+			<property name="property" value="plugin test"/>
+		</plugin>
+	</plugins>
+	
+	<!-- 데이터베이스및 트랜잭션 관리자 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+		<environment id="release">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 매퍼정의 -->
+	<mappers>
+		<mapper resource="mm/repository/mapper/SqlTranInqMapper.xml" />
+		<mapper resource="mm/repository/mapper/CodeMapper.xml" />
+		<mapper resource="mm/repository/mapper/ColMapper.xml" />
+	</mappers>
+</configuration>
