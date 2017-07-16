@@ -2,3 +2,10 @@
 2017.07.12
 1. IDE : Eclipse LUNA
 2. DB  : mariaDB-10.1.25
+3. github와  eclipse와 연결
+   - http://jwgye.tistory.com/38 참고
+   - 저장소 위치: https://github.com/py0777/SimpleBanking.git
+4. eclipse build path 설정
+   - http://mobilegen.tistory.com/33 참고
+6. mariaDB와 eclipse 연동
+   - http://jds0115.tistory.com/38
