@@ -9,3 +9,6 @@
    - http://mobilegen.tistory.com/33 참고
 6. mariaDB와 eclipse 연동
    - http://jds0115.tistory.com/38
+   
+7 mariaDB 테이블 생성 문 참고
+  -http://estenpark.tistory.com/358

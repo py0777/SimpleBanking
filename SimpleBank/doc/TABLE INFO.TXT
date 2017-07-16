@@ -1,11 +1,11 @@
 1. 데이터베이스 생성
-  - create database simplebank;
+  - create database SB;
 2. 계정생성
   - create user py0777;
   
 3. 테이블생성
 /*1.채번*/
-CREATE TABLE simplebank.RPD0100(
+CREATE TABLE SB.RPD0100(
   ACNO         VARCHAR(8)   NOT NULL /*계좌번호*/
 , LAST_TRNO    INT(8)       NOT NULL /*최종거래번호*/
 , LAST_TRDT    VARCHAR(8)   NOT NULL /*최종거래일자*/
@@ -15,7 +15,7 @@ CREATE TABLE simplebank.RPD0100(
 
 
 /*2.적요코드*/
-CREATE TABLE simplebank.RPA0100(
+CREATE TABLE SB.RPA0100(
   SYNS_CD       VARCHAR(3) NOT NULL /*적요코드*/
 , SYNS_NM       VARCHAR(20)         /*적요명*/
 , TR_TP_DCD     VARCHAR(2)          /*거래유형구분코드*/
@@ -25,7 +25,7 @@ CREATE TABLE simplebank.RPA0100(
 );
 
 /*3.예수금잔고*/
-CREATE TABLE simplebank.RPB1000(
+CREATE TABLE SB.RPB1000(
   ACNO          VARCHAR(8)  NOT NULL /*계좌번호*/
 , DACA          BIGINT(18)           /*예수금*/
 , CUST_NM       VARCHAR(50)          /*고객명*/
@@ -34,7 +34,7 @@ CREATE TABLE simplebank.RPB1000(
 );
 
 /*4.거래내역*/
-CREATE TABLE simplebank.RPD1000(
+CREATE TABLE SB.RPD1000(
   TR_DT        VARCHAR(8) NOT NULL /*거래일자*/
 , ACNO         VARCHAR(8) NOT NULL /*계좌번호*/
 , TR_NO        INT(8) NOT NULL     /*거래번호*/
@@ -53,7 +53,7 @@ CREATE TABLE simplebank.RPD1000(
 );
 
 /*5.연계거래내역*/
-CREATE TABLE simplebank.RPD1010(
+CREATE TABLE SB.RPD1010(
   TR_DT            VARCHAR(8) NOT NULL /*거래일자*/
 , ACNO             VARCHAR(8) NOT NULL /*계좌번호*/
 , TR_NO            INT(8)     NOT NULL /*거래번호*/
@@ -66,3 +66,6 @@ CREATE TABLE simplebank.RPD1010(
 , OPRT_TR_DTM      VARCHAR(16)         /*조작거래일시*/
 , PRIMARY KEY (TR_DT,ACNO,TR_NO)
 );
+
+/*데이터베이스 사용*/
+USE SB;
