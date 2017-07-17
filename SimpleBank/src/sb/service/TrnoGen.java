@@ -31,6 +31,7 @@ public class TrnoGen {
 		
 		String today = "";
 		long l_trno = 0;
+		int    rsCnt = 0;  /*결과 건수*/
 		GregorianCalendar gc = new GregorianCalendar();
 		SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
 		
@@ -63,7 +64,13 @@ public class TrnoGen {
 				
 				l_trno = dsTbl.getLongField("LAST_TRNO") + 1;
 			}
+			/*채번테이블 갱신*/
+			rsCnt = dh.updateSql(requestData, namespace+"."+"U001");
 	
+			if(rsCnt <=  0) {
+				throw new Exception( namespace+"."+"U001"+" 처리 건수 없음.");
+			}
+			
 			responseData.putField("TRNO", l_trno);
 		}catch (Exception e) {
 			e.printStackTrace();

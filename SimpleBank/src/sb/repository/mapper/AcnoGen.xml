@@ -18,7 +18,7 @@ SELECT ACNO  /*계좌번호*/
      , CUST_NM  /*예수금*/
      , OPRT_TR_DTM    /*조작거래일시*/
   FROM SB.RPB1000  /*잔고*/
- WHERE ACNO = ('${IN_ACNO}'
+ WHERE ACNO = '${IN_ACNO}'
 
 ]]>
 	</select>
