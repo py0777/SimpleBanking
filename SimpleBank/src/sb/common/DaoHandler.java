@@ -25,8 +25,7 @@ public class DaoHandler extends AbstractRepository{
 			/* test */
 		}
 	}
-	
-	
+		
 	public IDataSet selectOneSql(IDataSet requestData, String SqlID) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {

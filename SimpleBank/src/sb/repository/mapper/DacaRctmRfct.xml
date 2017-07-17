@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sb.repository.mapper.DacaRctmRfctMapper">
+
+	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
+SELECT ACNO  /*계좌번호*/
+          , DACA  /*예수금*/
+  FROM SB.RPB1000  /*예수금잔고*/
+ WHERE ACNO = '${ACNO}'
+
+]]>
+	</select>
+
+	<update id="U001" parameterType="map" ><![CDATA[
+UPDATE SB.RPB0100
+     SET DACA = DACA+'${RCTM_AMT}'
+         , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
+WHERE ACNO = '${ACNO}'
+]]>
+	</update>
+</mapper>
