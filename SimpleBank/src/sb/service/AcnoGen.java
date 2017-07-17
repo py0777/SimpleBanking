@@ -6,52 +6,14 @@ import java.util.GregorianCalendar;
 
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
-
-import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
+import sb.common.DaoHandler;
 
-import sb.common.RecordSetResultHandler;
-import sb.repository.AbstractRepository;
 
-public class GenAcno extends AbstractRepository{
-	static Logger logger = Logger.getLogger(GenAcno.class);
-	private final String namespace = "sb.repository.mapper.GenAcnoMapper";
+public class AcnoGen {
+	static Logger logger = Logger.getLogger(AcnoGen.class);
+	private final String namespace = "sb.repository.mapper.AcnoGenMapper";
 	
-	public IDataSet selectSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		try {
-			String statement = namespace + "."+SqlID;
-			
-
-			RecordSetResultHandler resultHandler = new RecordSetResultHandler();
-			resultHandler.setRecordSetId("ResultSet");
-
-			logger.debug("strat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			sqlSession.select(statement, requestData.getFieldMap(), resultHandler);
-
-			IDataSet ds = new DataSet();
-			ds.putRecordSet(resultHandler.getRecordSet());
-
-			return ds;
-		} finally {
-			sqlSession.close();
-			/* test */
-		}
-	}
-	
-	public void insertSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		try {
-			String statement = namespace + "."+SqlID;
-
-			logger.debug("strat!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			sqlSession.insert(statement, requestData.getFieldMap());
-
-		} finally {
-			sqlSession.close();
-			/* test */
-		}
-	}	
 	public IDataSet asGenAcno(IDataSet requestData){
 		
 		logger.debug("###########  START #########");
@@ -62,6 +24,7 @@ public class GenAcno extends AbstractRepository{
 		 * Declare Var
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
+		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		IDataSet dsTbl = null;
 		String today = "";
 		GregorianCalendar gc = new GregorianCalendar();
@@ -74,21 +37,22 @@ public class GenAcno extends AbstractRepository{
 			Date d = gc.getTime();
 			today = sdformat.format(d);
 			/*계좌번호 채번*/
-			dsTbl = selectSql(requestData,"S001");
+			
+			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
 			
 			sAcno = dsTbl.getField("ACNO");
 			
 			/*채번 생성*/
 			
 			requestData.putField("IN_ACNO", sAcno);
-			insertSql(requestData,"I001");
+			dh.insertSql(requestData,"I001");
 			
 			/*예수금잔고  생성*/
-			insertSql(requestData,"I002");
+			dh.insertSql(requestData,"I002");
 			
 			/*예수금잔고  조회*/
 			
-			responseData = selectSql(requestData,"S002");
+			responseData = dh.selectSql(requestData,"S002");
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
