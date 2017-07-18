@@ -27,7 +27,7 @@ SELECT ACNO  /*계좌번호*/
 INSERT INTO SB.RPD0100
 (ACNO, LAST_TRNO, LAST_TRDT,OPRT_TR_DTM )
 VALUES
-('${IN_ACNO}', 0, '19700101', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
+('${ACNO}', '${LAST_TRNO}', '${LAST_TRDT}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
 
 ]]>
 	</insert>
@@ -36,7 +36,7 @@ VALUES
 INSERT INTO SB.RPB1000
 (ACNO, DACA, CUST_NM,OPRT_TR_DTM )
 VALUES
-('${IN_ACNO}', 0, '${IN_CUST_NM}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
+('${ACNO}', '${DACA}', '${CUST_NM}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
 
 ]]>
 	</insert>
