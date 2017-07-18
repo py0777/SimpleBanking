@@ -1,17 +1,19 @@
 package sb.service.cm;
 
-import org.apache.log4j.Logger;
-
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
+
+import org.apache.log4j.Logger;
+
 import sb.common.DaoHandler;
 
 public class TrDetlRfct {
 
 	static Logger logger = Logger.getLogger(AcnoGen.class);
-	private final String namespace = "sb.repository.mapper.RPD1000_DefaultMapper";
-	
+	private final String rpd1000Dft = "sb.repository.mapper.RPD1000_DefaultMapper";
+	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
+	private final String rpa0100Dft = "sb.repository.mapper.RPA0100_DefaultMapper";
 	public IDataSet asTrDetlRfct(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
@@ -22,7 +24,9 @@ public class TrDetlRfct {
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
-		IDataSet dsTbl = null;
+		IDataSet dsRPA0100Q01= null;
+		IDataSet dsRPB1000Q01 = null;
+		IDataSet dsRPB1000I01 = new DataSet();
 				
 		int    rsCnt = 0;  /*결과 건수*/
 
@@ -31,35 +35,44 @@ public class TrDetlRfct {
 			/*입력값 체크*/
 			initCheck(requestData);
 			
-			/*1. 거래전 계좌잔고 조회 */
-			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
+			/***********************************************************************
+		    * 적요조회 호출
+		    ***********************************************************************/
+			dsRPA0100Q01 = dh.selectOneSql(requestData, rpa0100Dft+"."+"S001");
 			
-			logger.debug("거래전 계좌잔고 조회 : " + dsTbl);
+			logger.debug("적요조회 : " + dsRPA0100Q01);
+		    /***********************************************************************
+		    * 계좌예수금기본조회 호출
+		    ***********************************************************************/
+			dsRPB1000Q01 = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
 			
-			l_bfDaca = dsTbl.getLongField("DACA");
-			/*2. 계좌잔고 갱신 */
-			if(l_bfDaca + requestData.getLongField("RCTM_AMT") < 0) {
-				logger.error("예수금이 음수입니다.");
-				throw new Exception( "예수금이 음수입니다.");
-			}
+			logger.debug("계좌예수금조회 : " + dsRPB1000Q01);
 			
-			dsU001.putField("DACA", l_bfDaca + requestData.getLongField("RCTM_AMT"));
+		    /***********************************************************************
+		    * 거래내역 생성
+		    ***********************************************************************/
+			logger.debug("[START]거래내역 생성  ");
 			
-			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
+			dsRPB1000I01.putField("TR_DT", requestData.getField("TR_DT"));
+			dsRPB1000I01.putField("ACNO", requestData.getField("ACNO"));
+			dsRPB1000I01.putField("TR_NO", requestData.getLongField("TR_SN"));
+			dsRPB1000I01.putField("SYNS_CD", requestData.getField("SYNS_CD"));
+			dsRPB1000I01.putField("TR_TP_DCD", dsRPA0100Q01.getField("TR_TP_DCD"));
+			dsRPB1000I01.putField("TR_AMT", requestData.getLongField("TR_AMT"));
+			dsRPB1000I01.putField("BF_DACA", requestData.getLongField("BF_DACA"));
+			dsRPB1000I01.putField("AF_DACA", requestData.getLongField("AF_DACA"));
+			dsRPB1000I01.putField("CNCL_YN", "N");
+			dsRPB1000I01.putField("STRT_TR_NO", requestData.getLongField("STRT_TR_NO"));
+			dsRPB1000I01.putField("ORGN_TR_NO", requestData.getLongField("ORGN_TR_NO"));
+			dsRPB1000I01.putField("CLNT_NM", requestData.getField("CLNT_NM"));
+			
+			logger.debug("거래내역 생성INPUT " + dsRPB1000I01);
+			
+			rsCnt = dh.insertSql(dsRPB1000I01, rpd1000Dft+"."+"I001");
 			
 			if(rsCnt <=  0) {
-				throw new Exception( namespace+"."+"U001"+" 처리 건수 없음.");
+				throw new Exception( rpb1000Dft+"."+"U001"+" 등록오류.");
 			}
-			/*3. 거래후 계좌잔고 조회 */
-			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
-			
-			logger.debug("거래후 계좌잔고 조회 : " + dsTbl);
-			l_afDaca = dsTbl.getLongField("DACA");
-			
-			/*4. 결과값 생성*/
-			responseData.putField("BF_DACA", l_bfDaca);
-			responseData.putField("AF_DACA", l_afDaca);
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
