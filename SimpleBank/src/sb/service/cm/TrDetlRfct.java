@@ -1,4 +1,4 @@
-package sb.service;
+package sb.service.cm;
 
 import org.apache.log4j.Logger;
 

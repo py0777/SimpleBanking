@@ -1,18 +1,23 @@
-package sb.service;
+package sb.service.cm;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.apache.log4j.Logger;
+
 
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
 import sb.common.DaoHandler;
 
-public class DacaRctmRfct {
-
+public class TrnoGen {
 	static Logger logger = Logger.getLogger(AcnoGen.class);
-	private final String namespace = "sb.repository.mapper.DacaRctmRfctMapper";
+	private final String namespace = "sb.repository.mapper.TrnoGenMapper";
 	
-	public IDataSet asDacaRctmRfct(IDataSet requestData) throws Exception{
+	public IDataSet asTrnoGen(IDataSet requestData) throws Exception{
+		
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
@@ -24,50 +29,54 @@ public class DacaRctmRfct {
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		IDataSet dsTbl = null;
 		
-		IDataSet dsU001 = new DataSet();
-		long l_bfDaca = 0;  /*이전예수금*/
-		long l_afDaca = 0;  /*이전예수금*/
-		
-		int    rsCnt = 0;  /*결과 건수*/
+		String today = "";
+		long l_trno = 0;
 
+		int    rsCnt = 0;  /*결과 건수*/
+		GregorianCalendar gc = new GregorianCalendar();
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
+		
 		try
 		{
+			Date d = gc.getTime();
+			today = sdformat.format(d);
+			
 			/*입력값 체크*/
 			initCheck(requestData);
 			
-			/*1. 거래전 계좌잔고 조회 */
-			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
-			
-			logger.debug("거래전 계좌잔고 조회 : " + dsTbl);
-			
-			l_bfDaca = dsTbl.getLongField("DACA");
-			/*2. 계좌잔고 갱신 */
-			if(l_bfDaca + requestData.getLongField("RCTM_AMT") < 0) {
-				logger.error("예수금이 음수입니다.");
-				throw new Exception( "예수금이 음수입니다.");
+			/*일자체크*/
+			if( !today.equals(requestData.getField("TR_DT"))) {
+				throw new Exception("입력일자가 오늘이 아닙니다.");
 			}
 			
-			dsU001.putField("DACA", l_bfDaca + requestData.getLongField("RCTM_AMT"));
+			/* 채번테이블 조회*/
 			
-			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
+			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
 			
+			/*채번 값 설정*/
+			if(today.compareTo(dsTbl.getField("LAST_TR_DT")) < 0) {
+				throw new Exception("최종거래일자가 당일보다 큽니다.");
+			}
+			
+			if(today.compareTo(dsTbl.getField("LAST_TRDT")) > 0) {
+				l_trno = 1;
+			}
+			else{
+				
+				l_trno = dsTbl.getLongField("LAST_TRNO") + 1;
+			}
+			/*채번테이블 갱신*/
+			rsCnt = dh.updateSql(requestData, namespace+"."+"U001");
+	
 			if(rsCnt <=  0) {
 				throw new Exception( namespace+"."+"U001"+" 처리 건수 없음.");
 			}
-			/*3. 거래후 계좌잔고 조회 */
-			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
-			
-			logger.debug("거래후 계좌잔고 조회 : " + dsTbl);
-			l_afDaca = dsTbl.getLongField("DACA");
-			
-			/*4. 결과값 생성*/
-			responseData.putField("BF_DACA", l_bfDaca);
-			responseData.putField("AF_DACA", l_afDaca);
-			
+			responseData.putField("TRNO", l_trno);
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}	
+		
 		/*************************************************************
 		 * Retrun Result Data
 		 *************************************************************/
@@ -75,14 +84,17 @@ public class DacaRctmRfct {
 		responseData.setOkResultMessage("OK", new String[]{"처리완료되었습니다."});
 		
 		return responseData;
+		
+		
 	}
+	
 	/*initCheck*/
 	private void initCheck(IDataSet requestData) throws Exception {
 		
 		try {
 			/*일자체크*/
 			if( StringUtils.isEmpty(requestData.getField("TR_DT"))) {
-				throw new Exception("거래일자를 확인하세요.");
+				throw new Exception("입력일자를 확인하세요.");
 			}
 			
 			/*계좌번호체크*/
@@ -90,14 +102,10 @@ public class DacaRctmRfct {
 					|| StringUtils.length(requestData.getField("ACNO")) != 10) {
 				throw new Exception("계좌번호를 확인하세요.");
 			}
-			
-			/*입금금액체크*/
-			if( requestData.getLongField("RCTM_AMT") <= 0) {
-				throw new Exception("입금금액 확인하세요.");
-			}
 		}catch(Exception e){
 			throw e;
 		}
 		
 	}
+	
 }

@@ -1,4 +1,4 @@
-package sb.service;
+package sb.service.cm;
 
 import org.apache.log4j.Logger;
 
@@ -7,11 +7,12 @@ import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
 import sb.common.DaoHandler;
 
-public class DacaDrwgRfct {
+public class DacaRctmRfct {
+
 	static Logger logger = Logger.getLogger(AcnoGen.class);
-	private final String namespace = "sb.repository.mapper.DacaDrwgRfctMapper";
+	private final String namespace = "sb.repository.mapper.DacaRctmRfctMapper";
 	
-	public IDataSet asDacaDrwgRfct(IDataSet requestData) throws Exception{
+	public IDataSet asDacaRctmRfct(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
@@ -40,14 +41,13 @@ public class DacaDrwgRfct {
 			logger.debug("거래전 계좌잔고 조회 : " + dsTbl);
 			
 			l_bfDaca = dsTbl.getLongField("DACA");
-			
 			/*2. 계좌잔고 갱신 */
-			if(l_bfDaca - requestData.getLongField("DRWG_AMT") < 0) {
+			if(l_bfDaca + requestData.getLongField("RCTM_AMT") < 0) {
 				logger.error("예수금이 음수입니다.");
 				throw new Exception( "예수금이 음수입니다.");
 			}
 			
-			dsU001.putField("DACA", l_bfDaca - requestData.getLongField("RCTM_AMT"));
+			dsU001.putField("DACA", l_bfDaca + requestData.getLongField("RCTM_AMT"));
 			
 			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
 			
@@ -63,6 +63,7 @@ public class DacaDrwgRfct {
 			/*4. 결과값 생성*/
 			responseData.putField("BF_DACA", l_bfDaca);
 			responseData.putField("AF_DACA", l_afDaca);
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -75,7 +76,6 @@ public class DacaDrwgRfct {
 		
 		return responseData;
 	}
-	
 	/*initCheck*/
 	private void initCheck(IDataSet requestData) throws Exception {
 		
@@ -92,8 +92,8 @@ public class DacaDrwgRfct {
 			}
 			
 			/*입금금액체크*/
-			if( requestData.getLongField("DRWG_AMT") <= 0) {
-				throw new Exception("출금금액 확인하세요.");
+			if( requestData.getLongField("RCTM_AMT") <= 0) {
+				throw new Exception("입금금액 확인하세요.");
 			}
 		}catch(Exception e){
 			throw e;
