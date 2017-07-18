@@ -40,6 +40,7 @@ public class DacaDrwgRfct {
 			logger.debug("거래전 계좌잔고 조회 : " + dsTbl);
 			
 			l_bfDaca = dsTbl.getLongField("DACA");
+			
 			/*2. 계좌잔고 갱신 */
 			if(l_bfDaca - requestData.getLongField("DRWG_AMT") < 0) {
 				logger.error("예수금이 음수입니다.");
