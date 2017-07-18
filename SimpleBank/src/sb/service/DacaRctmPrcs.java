@@ -11,7 +11,7 @@ public class DacaRctmPrcs {
 
 	static Logger logger = Logger.getLogger(AcnoGen.class);
 	private final String namespace = "sb.repository.mapper.DacaRctmPrcsMapper";
-	
+	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
 	public IDataSet asDacaRctmPrcs(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
@@ -24,11 +24,6 @@ public class DacaRctmPrcs {
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		IDataSet dsTbl = null;
 		
-		IDataSet dsU001 = new DataSet();
-		long l_bfDaca = 0;  /*이전예수금*/
-		long l_afDaca = 0;  /*이전예수금*/
-		
-		int    rsCnt = 0;  /*결과 건수*/
 
 		try
 		{
@@ -39,9 +34,18 @@ public class DacaRctmPrcs {
 			
 			/*계좌잔고정보조회*/
 			
-			/*적요코드 조회*/
+			dsTbl = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
+			
 			
 			/*예수금 입금반영 호출*/
+			DacaRctmRfct drr = new DacaRctmRfct();  /*DacaRctmRfct*/
+			IDataSet drrDs = new DataSet();
+			
+			drrDs.putField("TR_DT", requestData.getField("TR_DT"));
+			drrDs.putField("ACNO", requestData.getField("ACNO"));
+			drrDs.putField("RCTM_AMT", requestData.getField("RCTM_AMT"));
+			
+			drr.asDacaRctmRfct(drrDs);
 			
 			/*거래내역반영 호출*/
 			

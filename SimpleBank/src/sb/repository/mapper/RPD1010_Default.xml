@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sb.repository.mapper.RPD1010_DefaultMapper">
+
+	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
+SELECT TR_DT  /*거래일자*/
+          , ACNO  /*계좌번호*/
+          , TR_NO /*거래번호*/
+          , REL_TR_DT /*연계거래일자*/
+          , OPNT_ACNO /*상대계좌번호*/
+          , OPNT_TR_NO /*상대거래번호*/
+          , REL_COM_ACTNO /*연계기관계좌번호*/
+          , OPNT_ACT_NM /*상대계좌명*/
+          , REL_COM_CD /*연계기관코드*/
+          , OPRT_TR_DTM /*조작거래일시*/
+  FROM SB.RPD1010  /*연계거래내역*/
+ WHERE TR_DT = '${TR_DT}'
+      AND ACNO = '${ACNO}'
+      AND TR_NO = '${TR_NO}'
+]]>
+	</select>
+
+
+	<insert id="I001" parameterType="map" ><![CDATA[
+INSERT INTO SB.RPD1010  /*연계거래내역*/
+( TR_DT  /*거래일자*/
+ , ACNO  /*계좌번호*/
+ , TR_NO /*거래번호*/
+ , REL_TR_DT /*연계거래일자*/
+ , OPNT_ACNO /*상대계좌번호*/
+ , OPNT_TR_NO /*상대거래번호*/
+ , REL_COM_ACTNO /*연계기관계좌번호*/
+ , OPNT_ACT_NM /*상대계좌명*/
+ , REL_COM_CD /*연계기관코드*/
+ , OPRT_TR_DTM /*조작거래일시*/ )
+VALUES
+('${TR_DT}'
+, '${ACNO}'
+, '${TR_NO}'
+, '${REL_TR_DT}'
+, '${OPNT_ACNO}'
+, '${OPNT_TR_NO}'
+, '${REL_COM_ACTNO}'
+, '${OPNT_ACT_NM}'
+, '${REL_COM_CD}'
+,  DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
+)
+
+]]>
+	</insert>
+</mapper>
