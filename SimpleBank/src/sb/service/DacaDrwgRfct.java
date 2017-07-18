@@ -1,8 +1,5 @@
 package sb.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
 import nexcore.framework.core.data.DataSet;
@@ -10,12 +7,11 @@ import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
 import sb.common.DaoHandler;
 
-public class DacaRctmRfct {
-
+public class DacaDrwgRfct {
 	static Logger logger = Logger.getLogger(AcnoGen.class);
-	private final String namespace = "sb.repository.mapper.DacaRctmRfctMapper";
+	private final String namespace = "sb.repository.mapper.DacaDrwgRfctMapper";
 	
-	public IDataSet asDacaRctmRfct(IDataSet requestData) throws Exception{
+	public IDataSet asDacaDrwgRfct(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
@@ -45,12 +41,12 @@ public class DacaRctmRfct {
 			
 			l_bfDaca = dsTbl.getLongField("DACA");
 			/*2. 계좌잔고 갱신 */
-			if(l_bfDaca + requestData.getLongField("RCTM_AMT") < 0) {
+			if(l_bfDaca - requestData.getLongField("DRWG_AMT") < 0) {
 				logger.error("예수금이 음수입니다.");
 				throw new Exception( "예수금이 음수입니다.");
 			}
 			
-			dsU001.putField("DACA", l_bfDaca + requestData.getLongField("RCTM_AMT"));
+			dsU001.putField("DACA", l_bfDaca - requestData.getLongField("RCTM_AMT"));
 			
 			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
 			
@@ -66,7 +62,6 @@ public class DacaRctmRfct {
 			/*4. 결과값 생성*/
 			responseData.putField("BF_DACA", l_bfDaca);
 			responseData.putField("AF_DACA", l_afDaca);
-			
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -79,6 +74,7 @@ public class DacaRctmRfct {
 		
 		return responseData;
 	}
+	
 	/*initCheck*/
 	private void initCheck(IDataSet requestData) throws Exception {
 		
@@ -95,8 +91,8 @@ public class DacaRctmRfct {
 			}
 			
 			/*입금금액체크*/
-			if( requestData.getLongField("RCTM_AMT") <= 0) {
-				throw new Exception("입금금액 확인하세요.");
+			if( requestData.getLongField("DRWG_AMT") <= 0) {
+				throw new Exception("출금금액 확인하세요.");
 			}
 		}catch(Exception e){
 			throw e;
