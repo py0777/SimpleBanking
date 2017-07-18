@@ -31,6 +31,7 @@ public class TrnoGen {
 		
 		String today = "";
 		long l_trno = 0;
+
 		int    rsCnt = 0;  /*결과 건수*/
 		GregorianCalendar gc = new GregorianCalendar();
 		SimpleDateFormat sdformat = new SimpleDateFormat("yyyyMMdd");
@@ -70,7 +71,6 @@ public class TrnoGen {
 			if(rsCnt <=  0) {
 				throw new Exception( namespace+"."+"U001"+" 처리 건수 없음.");
 			}
-			
 			responseData.putField("TRNO", l_trno);
 		}catch (Exception e) {
 			e.printStackTrace();

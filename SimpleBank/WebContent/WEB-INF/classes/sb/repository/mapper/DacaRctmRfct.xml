@@ -13,6 +13,7 @@ SELECT ACNO  /*계좌번호*/
 ]]>
 	</select>
 
+
 	<update id="U001" parameterType="map" ><![CDATA[
 UPDATE SB.RPB0100
      SET DACA = DACA+'${RCTM_AMT}'
