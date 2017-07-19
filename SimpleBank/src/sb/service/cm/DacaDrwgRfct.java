@@ -11,7 +11,7 @@ public class DacaDrwgRfct {
 	static Logger logger = Logger.getLogger(AcnoGen.class);
 	private final String namespace = "sb.repository.mapper.DacaDrwgRfctMapper";
 	
-	public IDataSet asDacaDrwgRfct(IDataSet requestData) throws Exception{
+	public IDataSet cmDacaDrwgRfct(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		

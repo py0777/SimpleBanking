@@ -8,15 +8,17 @@ import org.apache.log4j.Logger;
 
 import sb.common.DaoHandler;
 
-public class DacaRctmPrcs {
+public class DacaDrwgPrcs
+{
 
 	static Logger logger = Logger.getLogger(AcnoGen.class);
 	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
-	public IDataSet asDacaRctmPrcs(IDataSet requestData) throws Exception{
+	public IDataSet cmDacaDrwgPrcs(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
 		logger.debug(requestData);
+		
 		/*************************************************************
 		 * Declare Var
 		 *************************************************************/
@@ -30,21 +32,23 @@ public class DacaRctmPrcs {
 			 ********************************************************************/
 			initCheck(requestData);
 			
-			/*계좌잔고정보조회*/
-			
+			/********************************************************************
+			 *  계좌잔고정보조회
+			 ********************************************************************/
 			dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
 			
+			/********************************************************************
+			 *  예수금 출금반영 호출
+			 ********************************************************************/
+			DacaDrwgRfct ddr = new DacaDrwgRfct();  /*예수금 출금반영*/
+			IDataSet ddrDsIn = new DataSet();
+			IDataSet ddrDsOut = null; 
 			
-			/*예수금 입금반영 호출*/
-			DacaRctmRfct drr = new DacaRctmRfct();  /*DacaRctmRfct*/
-			IDataSet drrDsIn = new DataSet();
-			IDataSet drrDsOut = null; 
+			ddrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
+			ddrDsIn.putField("ACNO", requestData.getField("ACNO"));
+			ddrDsIn.putField("DRWG_AMT", requestData.getField("DRWG_AMT"));
 			
-			drrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
-			drrDsIn.putField("ACNO", requestData.getField("ACNO"));
-			drrDsIn.putField("RCTM_AMT", requestData.getField("RCTM_AMT"));
-			
-			drrDsOut = drr.asDacaRctmRfct(drrDsIn);
+			ddrDsOut = ddr.cmDacaDrwgRfct(ddrDsIn);
 			
 			/********************************************************************
 			 *  거래내역반영 호출
@@ -57,8 +61,8 @@ public class DacaRctmPrcs {
 			tdrDsIn.putField("TR_NO", requestData.getLongField("TR_SN"));
 			tdrDsIn.putField("SYNS_CD", requestData.getField("SYNS_CD"));
 			tdrDsIn.putField("TR_AMT", requestData.getLongField("TR_AMT"));
-			tdrDsIn.putField("BF_DACA", drrDsOut.getLongField("BF_DACA"));
-			tdrDsIn.putField("AF_DACA", drrDsOut.getLongField("AF_DACA"));
+			tdrDsIn.putField("BF_DACA", ddrDsOut.getLongField("BF_DACA"));
+			tdrDsIn.putField("AF_DACA", ddrDsOut.getLongField("AF_DACA"));
 			tdrDsIn.putField("STRT_TR_NO", requestData.getLongField("STRT_TR_NO"));
 			tdrDsIn.putField("ORGN_TR_NO", 0);
 			tdrDsIn.putField("CLNT_NM", requestData.getField("CLNT_NM"));
@@ -66,14 +70,13 @@ public class DacaRctmPrcs {
 			tdr.cmTrDetlRfct(tdrDsIn);
 			
 			/*결과값 생성*/
-			responseData.putField("BF_DACA", drrDsOut.getLongField("BF_DACA"));
-			responseData.putField("AF_DACA", drrDsOut.getLongField("AF_DACA"));
+			responseData.putField("BF_DACA", ddrDsOut.getLongField("BF_DACA"));
+			responseData.putField("AF_DACA", ddrDsOut.getLongField("AF_DACA"));
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}	
-		
 		/*************************************************************
 		 * Retrun Result Data
 		 *************************************************************/
@@ -82,6 +85,7 @@ public class DacaRctmPrcs {
 		
 		return responseData;
 	}
+	
 	/*initCheck*/
 	private void initCheck(IDataSet requestData) throws Exception {
 	

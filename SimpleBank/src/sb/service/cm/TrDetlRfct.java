@@ -16,7 +16,7 @@ public class TrDetlRfct {
 	private final String rpa0100Dft = "sb.repository.mapper.RPA0100_DefaultMapper";
 	
 	
-	public IDataSet asTrDetlRfct(IDataSet requestData) throws Exception{
+	public IDataSet cmTrDetlRfct(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
