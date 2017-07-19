@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 
 import sb.common.DaoHandler;
 
-public class TrDetlRfct {
+public class CmTrDetlRfct {
 
-	static Logger logger = Logger.getLogger(AcnoGen.class);
+	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	private final String rpd1000Dft = "sb.repository.mapper.RPD1000_DefaultMapper";
 	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
 	private final String rpa0100Dft = "sb.repository.mapper.RPA0100_DefaultMapper";
@@ -98,7 +98,7 @@ public class TrDetlRfct {
 			
 			/*계좌번호체크*/
 			if( StringUtils.isEmpty(requestData.getField("ACNO"))
-					|| StringUtils.length(requestData.getField("ACNO")) != 10) {
+					|| StringUtils.length(requestData.getField("ACNO")) != 11) {
 				throw new Exception("계좌번호를 확인하세요.");
 			}
 			

@@ -7,8 +7,8 @@ import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
 import sb.common.DaoHandler;
 
-public class DacaDrwgRfct {
-	static Logger logger = Logger.getLogger(AcnoGen.class);
+public class CmDacaDrwgRfct {
+	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	private final String namespace = "sb.repository.mapper.DacaDrwgRfctMapper";
 	
 	public IDataSet cmDacaDrwgRfct(IDataSet requestData) throws Exception{
@@ -87,7 +87,7 @@ public class DacaDrwgRfct {
 			
 			/*계좌번호체크*/
 			if( StringUtils.isEmpty(requestData.getField("ACNO"))
-					|| StringUtils.length(requestData.getField("ACNO")) != 10) {
+					|| StringUtils.length(requestData.getField("ACNO")) != 11) {
 				throw new Exception("계좌번호를 확인하세요.");
 			}
 			

@@ -8,11 +8,11 @@ import org.apache.log4j.Logger;
 
 import sb.common.DaoHandler;
 
-public class DacaRctmPrcs {
+public class CmDacaRctmPrcs {
 
-	static Logger logger = Logger.getLogger(AcnoGen.class);
+	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
-	public IDataSet asDacaRctmPrcs(IDataSet requestData) throws Exception{
+	public IDataSet cmDacaRctmPrcs(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
@@ -36,7 +36,7 @@ public class DacaRctmPrcs {
 			
 			
 			/*예수금 입금반영 호출*/
-			DacaRctmRfct drr = new DacaRctmRfct();  /*DacaRctmRfct*/
+			CmDacaRctmRfct drr = new CmDacaRctmRfct();  /*DacaRctmRfct*/
 			IDataSet drrDsIn = new DataSet();
 			IDataSet drrDsOut = null; 
 			
@@ -44,12 +44,12 @@ public class DacaRctmPrcs {
 			drrDsIn.putField("ACNO", requestData.getField("ACNO"));
 			drrDsIn.putField("RCTM_AMT", requestData.getField("RCTM_AMT"));
 			
-			drrDsOut = drr.asDacaRctmRfct(drrDsIn);
+			drrDsOut = drr.cmDacaRctmRfct(drrDsIn);
 			
 			/********************************************************************
 			 *  거래내역반영 호출
 			 ********************************************************************/
-			TrDetlRfct tdr = new TrDetlRfct();  /*거래내역반영*/
+			CmTrDetlRfct tdr = new CmTrDetlRfct();  /*거래내역반영*/
 			IDataSet tdrDsIn = new DataSet();
 			
 			tdrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
@@ -93,7 +93,7 @@ public class DacaRctmPrcs {
 		
 		/*계좌번호체크*/
 		if( StringUtils.isEmpty(requestData.getField("ACNO"))
-				|| StringUtils.length(requestData.getField("ACNO")) != 10) {
+				|| StringUtils.length(requestData.getField("ACNO")) != 11) {
 			throw new Exception("계좌번호를 확인하세요.");
 		}
 		

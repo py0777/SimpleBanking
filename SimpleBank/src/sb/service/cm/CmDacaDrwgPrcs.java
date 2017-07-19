@@ -8,10 +8,10 @@ import org.apache.log4j.Logger;
 
 import sb.common.DaoHandler;
 
-public class DacaDrwgPrcs
+public class CmDacaDrwgPrcs
 {
 
-	static Logger logger = Logger.getLogger(AcnoGen.class);
+	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
 	public IDataSet cmDacaDrwgPrcs(IDataSet requestData) throws Exception{
 		logger.debug("###########  START #########");
@@ -40,7 +40,7 @@ public class DacaDrwgPrcs
 			/********************************************************************
 			 *  예수금 출금반영 호출
 			 ********************************************************************/
-			DacaDrwgRfct ddr = new DacaDrwgRfct();  /*예수금 출금반영*/
+			CmDacaDrwgRfct ddr = new CmDacaDrwgRfct();  /*예수금 출금반영*/
 			IDataSet ddrDsIn = new DataSet();
 			IDataSet ddrDsOut = null; 
 			
@@ -53,7 +53,7 @@ public class DacaDrwgPrcs
 			/********************************************************************
 			 *  거래내역반영 호출
 			 ********************************************************************/
-			TrDetlRfct tdr = new TrDetlRfct();  /*거래내역반영*/
+			CmTrDetlRfct tdr = new CmTrDetlRfct();  /*거래내역반영*/
 			IDataSet tdrDsIn = new DataSet();
 			
 			tdrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
@@ -97,7 +97,7 @@ public class DacaDrwgPrcs
 		
 		/*계좌번호체크*/
 		if( StringUtils.isEmpty(requestData.getField("ACNO"))
-				|| StringUtils.length(requestData.getField("ACNO")) != 10) {
+				|| StringUtils.length(requestData.getField("ACNO")) != 11) {
 			throw new Exception("계좌번호를 확인하세요.");
 		}
 		

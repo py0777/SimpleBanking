@@ -6,7 +6,7 @@
 3. 테이블생성
 /*1.채번*/
 CREATE TABLE SB.RPD0100(
-  ACNO         VARCHAR(8)   NOT NULL /*계좌번호*/
+  ACNO         VARCHAR(11)   NOT NULL /*계좌번호*/
 , LAST_TRNO    INT(8)       NOT NULL /*최종거래번호*/
 , LAST_TRDT    VARCHAR(8)   NOT NULL /*최종거래일자*/
 , OPRT_TR_DTM  VARCHAR(16)           /*조작거래일시*/
@@ -26,7 +26,7 @@ CREATE TABLE SB.RPA0100(
 
 /*3.예수금잔고*/
 CREATE TABLE SB.RPB1000(
-  ACNO          VARCHAR(8)  NOT NULL /*계좌번호*/
+  ACNO          VARCHAR(11)  NOT NULL /*계좌번호*/
 , DACA          BIGINT(18)           /*예수금*/
 , CUST_NM       VARCHAR(50)          /*고객명*/
 , OPRT_TR_DTM   VARCHAR(16)          /*조작거래일시*/
@@ -36,7 +36,7 @@ CREATE TABLE SB.RPB1000(
 /*4.거래내역*/
 CREATE TABLE SB.RPD1000(
   TR_DT        VARCHAR(8) NOT NULL /*거래일자*/
-, ACNO         VARCHAR(8) NOT NULL /*계좌번호*/
+, ACNO         VARCHAR(11) NOT NULL /*계좌번호*/
 , TR_NO        INT(8) NOT NULL     /*거래번호*/
 , SYNS_CD      VARCHAR(3)          /*적요코드*/
 , TR_TP_DCD    VARCHAR(2)          /*거래유형구분코드*/
@@ -54,11 +54,11 @@ CREATE TABLE SB.RPD1000(
 
 /*5.연계거래내역*/
 CREATE TABLE SB.RPD1010(
-  TR_DT            VARCHAR(8) NOT NULL /*거래일자*/
+  TR_DT            VARCHAR(11) NOT NULL /*거래일자*/
 , ACNO             VARCHAR(8) NOT NULL /*계좌번호*/
 , TR_NO            INT(8)     NOT NULL /*거래번호*/
 , REL_TR_DT        VARCHAR(8)          /*연계거래일자*/
-, OPNT_ACNO        VARCHAR(8)          /*상대계좌번호*/
+, OPNT_ACNO        VARCHAR(11)         /*상대계좌번호*/
 , OPNT_TR_NO       INT(8)              /*상대거래번호*/
 , REL_COM_ACTNO    VARCHAR(20)         /*연계기관계좌번호*/
 , OPNT_ACT_NM      VARCHAR(50)         /*상대계좌명*/
