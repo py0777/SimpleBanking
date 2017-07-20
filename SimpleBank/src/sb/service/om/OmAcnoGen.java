@@ -12,7 +12,7 @@ public class OmAcnoGen
 {
 static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	
-	public IDataSet cmGenAcno(IDataSet requestData)throws Exception{
+	public IDataSet omAcnoGen(IDataSet requestData)throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		

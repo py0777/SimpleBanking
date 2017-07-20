@@ -13,7 +13,7 @@ public class OmAcnoDacaInqr
 {
 	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	
-	public IDataSet cmGenAcno(IDataSet requestData)throws Exception{
+	public IDataSet omAcnoDacaInqr(IDataSet requestData)throws Exception{
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
 		
