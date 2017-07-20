@@ -24,6 +24,7 @@ public class CmDacaDrwgPrcs
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
+		IDataSet dSS001Out = null;
 		
 		try
 		{
@@ -35,8 +36,13 @@ public class CmDacaDrwgPrcs
 			/********************************************************************
 			 *  계좌잔고정보조회
 			 ********************************************************************/
-			dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
+			dSS001Out = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
 			
+			if( dSS001Out == null)
+			{
+				logger.error("계좌잔고 정보가 존재하지 않습니다.");
+				throw new Exception("계좌잔고 정보가 존재하지 않습니다.");
+			}
 			/********************************************************************
 			 *  예수금 출금반영 호출
 			 ********************************************************************/
@@ -88,37 +94,43 @@ public class CmDacaDrwgPrcs
 	
 	/*initCheck*/
 	private void initCheck(IDataSet requestData) throws Exception {
-	
+		logger.debug("[Start] initCheck");
 	
 		/*일자체크*/
 		if( StringUtils.isEmpty(requestData.getField("TR_DT"))) {
+			logger.error("거래일자를 확인하세요.");
 			throw new Exception("거래일자를 확인하세요.");
 		}
 		
 		/*계좌번호체크*/
 		if( StringUtils.isEmpty(requestData.getField("ACNO"))
 				|| StringUtils.length(requestData.getField("ACNO")) != 11) {
+			logger.error("계좌번호를 확인하세요.");
 			throw new Exception("계좌번호를 확인하세요.");
 		}
 		
 		/*거래번호*/
 		if( requestData.getLongField("TR_SN") <= 0) {
-			throw new Exception("거래번호 확인하세요.");
+			logger.error("거래번호를 확인하세요.");
+			throw new Exception("거래번호를 확인하세요.");
 		}
 		
 		/*시작거래번호*/
 		if( requestData.getLongField("STRT_TR_SN") <= 0) {
+			logger.error("시작거래번호 확인하세요.");
 			throw new Exception("시작거래번호 확인하세요.");
 		}
 		
 		/*총거래금액체크*/
 		if( requestData.getLongField("TOT_TR_AMT") <= 0) {
+			logger.error("총거래금액 확인하세요.");
 			throw new Exception("총거래금액 확인하세요.");
 		}
 		
 		/*적요코드체크*/
 		if( StringUtils.isEmpty(requestData.getField("SYNS_CD"))
 				||StringUtils.length(requestData.getField("SYNS_CD")) != 3) {
+			logger.error("적요코드를 확인하세요.");
 			throw new Exception("적요코드를 확인하세요.");
 		}
 		
