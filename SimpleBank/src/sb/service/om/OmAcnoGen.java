@@ -6,7 +6,6 @@ import nexcore.framework.core.util.StringUtils;
 
 import org.apache.log4j.Logger;
 
-import sb.service.cm.CmAcnoDacaInqr;
 import sb.service.cm.CmAcnoGen;
 
 public class OmAcnoGen
