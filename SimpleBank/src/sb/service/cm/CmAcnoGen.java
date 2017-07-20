@@ -17,7 +17,7 @@ public class CmAcnoGen {
 	static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	private final String namespace = "sb.repository.mapper.AcnoGenMapper";
 	
-	public IDataSet cmGenAcno(IDataSet requestData)throws Exception{
+	public IDataSet cmAcnoGen(IDataSet requestData)throws Exception{
 		
 		logger.debug("###########  START #########");
 		logger.debug(getClass().getName());
@@ -48,6 +48,19 @@ public class CmAcnoGen {
 			}
 			else
 			{
+				/********************************************************************
+				 *  예수금잔고 존재여부 체크
+				 ********************************************************************/
+				IDataSet dsS002Out = null;
+				
+				dsS002Out = dh.selectSql(requestData,namespace+"."+"S002");
+				
+				if( dsS002Out != null)
+				{
+					logger.error("계좌잔고 정보가 이미 존재합니다.");
+					throw new Exception("계좌잔고 정보가 이미 존재합니다.");
+				}
+				
 				/********************************************************************
 				 *  계좌번호 채번
 				 ********************************************************************/
@@ -88,7 +101,8 @@ public class CmAcnoGen {
 			 *  예수금잔고조회
 			 ********************************************************************/
 			
-			responseData = dh.selectSql(requestData,"S002");
+			responseData = dh.selectSql(requestData,namespace+"."+"S002");
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
