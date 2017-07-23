@@ -1,5 +1,7 @@
 package sb.service.cm;
 
+import java.util.Map;
+
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
@@ -26,8 +28,9 @@ public class CmTrDetlRfct {
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
-		IDataSet dsRPA0100Q01= null;
-		IDataSet dsRPB1000Q01 = null;
+		
+		Map rpa0100Q01MapOut = null;
+		Map rpb0100Q01MapOut = null;
 		IDataSet dsRPB1000I01 = new DataSet();
 				
 		int    rsCnt = 0;  /*결과 건수*/
@@ -40,15 +43,21 @@ public class CmTrDetlRfct {
 			/***********************************************************************
 		    * 적요조회 호출
 		    ***********************************************************************/
-			dsRPA0100Q01 = dh.selectOneSql(requestData, rpa0100Dft+"."+"S001");
+			rpa0100Q01MapOut = dh.selectOneSql(requestData, rpa0100Dft+"."+"S001");
 			
-			logger.debug("적요조회 : " + dsRPA0100Q01);
+			logger.debug("적요조회 : " + rpa0100Q01MapOut);
 		    /***********************************************************************
 		    * 계좌예수금기본조회 호출
 		    ***********************************************************************/
-			dsRPB1000Q01 = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
+			rpb0100Q01MapOut = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
 			
-			logger.debug("계좌예수금조회 : " + dsRPB1000Q01);
+			logger.debug("계좌예수금조회 : " + rpb0100Q01MapOut);
+			
+			if( rpb0100Q01MapOut == null)
+			{
+				logger.error("계좌잔고 정보가 존재하지 않습니다.");
+				throw new Exception("계좌잔고 정보가 존재하지 않습니다.");
+			}
 			
 		    /***********************************************************************
 		    * 거래내역 생성
@@ -59,7 +68,7 @@ public class CmTrDetlRfct {
 			dsRPB1000I01.putField("ACNO", requestData.getField("ACNO"));
 			dsRPB1000I01.putField("TR_NO", requestData.getLongField("TR_SN"));
 			dsRPB1000I01.putField("SYNS_CD", requestData.getField("SYNS_CD"));
-			dsRPB1000I01.putField("TR_TP_DCD", dsRPA0100Q01.getField("TR_TP_DCD"));
+			dsRPB1000I01.putField("TR_TP_DCD", rpa0100Q01MapOut.get("TR_TP_DCD"));
 			dsRPB1000I01.putField("TR_AMT", requestData.getLongField("TR_AMT"));
 			dsRPB1000I01.putField("BF_DACA", requestData.getLongField("BF_DACA"));
 			dsRPB1000I01.putField("AF_DACA", requestData.getLongField("AF_DACA"));

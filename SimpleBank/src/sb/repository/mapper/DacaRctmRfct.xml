@@ -5,8 +5,9 @@
 <mapper namespace="sb.repository.mapper.DacaRctmRfctMapper">
 
 	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
-SELECT ACNO  /*계좌번호*/
-          , DACA  /*예수금*/
+SELECT /*sb.repository.mapper.DacaRctmRfctMapper.S001*/
+       ACNO  /*계좌번호*/
+     , DACA  /*예수금*/
   FROM SB.RPB1000  /*예수금잔고*/
  WHERE ACNO = '${ACNO}'
 
@@ -15,10 +16,11 @@ SELECT ACNO  /*계좌번호*/
 
 
 	<update id="U001" parameterType="map" ><![CDATA[
-UPDATE SB.RPB0100
-     SET DACA = '${DACA}'
-         , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
-WHERE ACNO = '${ACNO}'
+UPDATE /*sb.repository.mapper.DacaRctmRfctMapper.U001*/
+       SB.RPB0100
+   SET DACA = '${DACA}'
+     , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
+ WHERE ACNO = '${ACNO}'
 ]]>
 	</update>
 </mapper>

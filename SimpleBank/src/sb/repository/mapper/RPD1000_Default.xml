@@ -5,7 +5,8 @@
 <mapper namespace="sb.repository.mapper.RPD1000_DefaultMapper">
 
 	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
-SELECT TR_DT  /*거래일자*/
+SELECT /*sb.repository.mapper.RPD1000_DefaultMapper.S001*/
+       TR_DT  /*거래일자*/
           , ACNO  /*계좌번호*/
           , TR_NO /*거래번호*/
           , SYNS_CD /*적요코드*/
@@ -28,7 +29,8 @@ SELECT TR_DT  /*거래일자*/
 
 
 	<insert id="I001" parameterType="map" ><![CDATA[
-INSERT INTO SB.RPD1000  /*거래내역*/
+INSERT /*sb.repository.mapper.RPD1000_DefaultMapper.I001*/
+  INTO SB.RPD1000  /*거래내역*/
 ( TR_DT  /*거래일자*/
 , ACNO  /*계좌번호*/
 , TR_NO /*거래번호*/
@@ -49,12 +51,12 @@ VALUES
 , '${TR_NO}'
 , '${SYNS_CD}'
 , '${TR_TP_DCD}'
-, '${TR_AMT}'
-, '${BF_DACA}'
-, '${AF_DACA}'
+, ${TR_AMT}
+, ${BF_DACA}
+, ${AF_DACA}
 , '${CNCL_YN}'
-, '${STRT_TR_NO}'
-, '${ORGN_TR_NO}'
+, ${STRT_TR_NO}
+, ${ORGN_TR_NO}
 , '${CLNT_NM}'
 , SYSDATE()
 ,DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))

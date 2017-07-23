@@ -3,8 +3,10 @@ package sb.service.cm;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
+
 
 
 import nexcore.framework.core.data.DataSet;
@@ -27,7 +29,7 @@ public class CmTrnoGen {
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
-		IDataSet dsTbl = null;
+		Map s001MapOut = null;
 		
 		String today = "";
 		long l_trno = 0;
@@ -51,19 +53,19 @@ public class CmTrnoGen {
 			
 			/* 채번테이블 조회*/
 			
-			dsTbl = dh.selectOneSql(requestData, namespace+"."+"S001");
+			s001MapOut = dh.selectOneSql(requestData, namespace+"."+"S001");
 			
 			/*채번 값 설정*/
-			if(today.compareTo(dsTbl.getField("LAST_TR_DT")) < 0) {
+			if(today.compareTo(String.valueOf(s001MapOut.get("LAST_TR_DT"))) < 0) {
 				throw new Exception("최종거래일자가 당일보다 큽니다.");
 			}
 			
-			if(today.compareTo(dsTbl.getField("LAST_TRDT")) > 0) {
+			if(today.compareTo(String.valueOf(s001MapOut.get("LAST_TRDT"))) > 0) {
 				l_trno = 1;
 			}
 			else{
 				
-				l_trno = dsTbl.getLongField("LAST_TRNO") + 1;
+				l_trno = (Long)s001MapOut.get("LAST_TRNO") + 1;
 			}
 			/*채번테이블 갱신*/
 			rsCnt = dh.updateSql(requestData, namespace+"."+"U001");

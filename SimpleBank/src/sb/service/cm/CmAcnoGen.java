@@ -3,6 +3,7 @@ package sb.service.cm;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Map;
 
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
@@ -55,7 +56,8 @@ public class CmAcnoGen {
 				
 				dsS002Out = dh.selectSql(requestData,namespace+"."+"S002");
 				
-				if( dsS002Out != null)
+				logger.error("dsS002Out" + dsS002Out);
+				if( dsS002Out.getField("ACNO") != null)
 				{
 					logger.error("계좌잔고 정보가 이미 존재합니다.");
 					throw new Exception("계좌잔고 정보가 이미 존재합니다.");
@@ -64,11 +66,13 @@ public class CmAcnoGen {
 				/********************************************************************
 				 *  계좌번호 채번
 				 ********************************************************************/
-				IDataSet dsS001Out = null;
 				
-				dsS001Out = dh.selectOneSql(requestData, namespace+"."+"S001");
+				Map s001Mapout = null;
+				s001Mapout = dh.selectOneSql(requestData, namespace+"."+"S001");
 				
-				sAcno = dsS001Out.getField("ACNO");
+				logger.debug("s001Mapout" + s001Mapout);
+				
+				sAcno = String.valueOf(s001Mapout.get("ACNO"));
 				
 			}
 			
@@ -90,6 +94,7 @@ public class CmAcnoGen {
 			}
 			
 			/*예수금잔고  생성*/
+			
 			dsI000In.putField("CUST_NM", requestData.getField("CUST_NM"));
 			
 			rsCnt =  dh.insertSql(dsI000In,namespace+"."+"I002");
@@ -101,7 +106,7 @@ public class CmAcnoGen {
 			 *  예수금잔고조회
 			 ********************************************************************/
 			
-			responseData = dh.selectSql(requestData,namespace+"."+"S002");
+			responseData = dh.selectSql(dsI000In,namespace+"."+"S002");
 			
 		}catch (Exception e) {
 			e.printStackTrace();

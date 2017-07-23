@@ -5,11 +5,12 @@
 <mapper namespace="sb.repository.mapper.RPA0100_DefaultMapper">
 
 	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
-SELECT SYNS_CD  /*적요코드*/
-          , SYNS_NM  /*적요명*/
-          , TR_TP_DCD /*거래유형구분코드*/
-          , CNCL_SYNS_NM /*취소적요명*/
-          , OPRT_TR_DTM /*조작거래일시*/
+SELECT /*sb.repository.mapper.RPA0100_DefaultMapper.S001*/
+       SYNS_CD  /*적요코드*/
+     , SYNS_NM  /*적요명*/
+     , TR_TP_DCD /*거래유형구분코드*/
+     , CNCL_SYNS_NM /*취소적요명*/
+     , OPRT_TR_DTM /*조작거래일시*/
   FROM SB.RPA0100  /*적요코드*/
  WHERE SYNS_CD = '${SYNS_CD}'
 
@@ -18,19 +19,21 @@ SELECT SYNS_CD  /*적요코드*/
 
 
 	<insert id="I001" parameterType="map" ><![CDATA[
-INSERT INTO SB.RPA0100  /*적요코드*/
-(SYNS_CD
-, SYNS_NM
-, TR_TP_DCD
-,CNCL_SYNS_NM
-,OPRT_TR_DTM )
+INSERT /*sb.repository.mapper.RPA0100_DefaultMapper.I001*/
+  INTO SB.RPA0100  /*적요코드*/
+     ( SYNS_CD
+     , SYNS_NM
+     , TR_TP_DCD
+     , CNCL_SYNS_NM
+     , OPRT_TR_DTM 
+     )
 VALUES
-('${SYNS_CD}'
-, '${SYNS_NM}'
-, '${TR_TP_DCD}'
-, '${CNCL_SYNS_NM}'
-,DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
-)
+     ( '${SYNS_CD}'
+     , '${SYNS_NM}'
+     , '${TR_TP_DCD}'
+     , '${CNCL_SYNS_NM}'
+     , DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
+     )
 ]]>
 	</insert>
 </mapper>

@@ -1,5 +1,7 @@
 package sb.service.cm;
 
+import java.util.Map;
+
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
@@ -23,7 +25,7 @@ public class CmAcnoDacaInqr
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
-		IDataSet dSS001Out = null;
+		Map s001MapOut = null;
 		
 		try
 		{
@@ -35,9 +37,9 @@ public class CmAcnoDacaInqr
 			/********************************************************************
 			 *  계좌잔고정보조회
 			 ********************************************************************/
-			dSS001Out = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
+			s001MapOut = dh.selectOneSql(requestData, rpb1000Dft+"."+"S001");
 			
-			if( dSS001Out == null)
+			if( s001MapOut == null)
 			{
 				logger.error("계좌잔고 정보가 존재하지 않습니다.");
 				throw new Exception("계좌잔고 정보가 존재하지 않습니다.");
@@ -46,7 +48,7 @@ public class CmAcnoDacaInqr
 			/********************************************************************
 			 *  결과값 설정
 			 ********************************************************************/
-			responseData = dSS001Out;
+			responseData.putFieldMap(s001MapOut);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

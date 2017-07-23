@@ -1,12 +1,18 @@
 package sb.common;
 
-import org.apache.ibatis.session.SqlSession;
+import java.util.HashMap;
 
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
+
 import sb.repository.AbstractRepository;
 
 public class DaoHandler extends AbstractRepository{
+	
+	static Logger logger = Logger.getLogger(DaoHandler.class);
 	public IDataSet selectSql(IDataSet requestData, String SqlID) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
@@ -18,7 +24,7 @@ public class DaoHandler extends AbstractRepository{
 
 			IDataSet ds = new DataSet();
 			ds.putRecordSet(resultHandler.getRecordSet());
-
+			logger.debug(ds);
 			return ds;
 		} finally {
 			sqlSession.close();
@@ -27,19 +33,15 @@ public class DaoHandler extends AbstractRepository{
 	}
 		
 	
-	public IDataSet selectOneSql(IDataSet requestData, String SqlID) {
+	public HashMap selectOneSql(IDataSet requestData, String SqlID) {
 		SqlSession sqlSession = getSqlSessionFactory().openSession();
 		try {
 			String statement = SqlID;
 			
-			RecordSetResultHandler resultHandler = new RecordSetResultHandler();
-			resultHandler.setRecordSetId("ResultSet");
-			sqlSession.selectOne(statement, requestData.getFieldMap());
-
-			IDataSet ds = new DataSet();
-			ds.putRecordSet(resultHandler.getRecordSet());
-
-			return ds;
+			HashMap hm = sqlSession.selectOne(statement, requestData);
+			
+			logger.debug(hm);
+			return hm;
 		} finally {
 			sqlSession.close();
 			/* test */
@@ -57,6 +59,7 @@ public class DaoHandler extends AbstractRepository{
 			
 			return cnt;
 		} finally {
+			sqlSession.commit();
 			sqlSession.close();
 			/* test */
 		}
@@ -72,6 +75,7 @@ public class DaoHandler extends AbstractRepository{
 			return cnt;
 			
 		} finally {
+			sqlSession.commit();
 			sqlSession.close();
 			/* test */
 		}
