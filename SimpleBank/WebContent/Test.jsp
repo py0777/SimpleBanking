@@ -26,14 +26,19 @@ request.setCharacterEncoding("UTF-8");/* 한글깨짐 현상 없애기 위함*/
 IDataSet requestData = new DataSet();
 
 OmAcnoGen oag = new OmAcnoGen();
-
-IDataSet responseData = oag.omAcnoGen(requestData);
-
-
+if(!StringUtils.isEmpty(request.getParameter("ACNO"))
+		&& !"null".equals(request.getParameter("ACNO"))){
+		
+		requestData.putField("ACNO", request.getParameter("ACNO").toUpperCase());
+		IDataSet responseData = oag.omAcnoGen(requestData);
+}
 %>
 
 <form action="Test.jsp" id ="myForm" name="myForm" method="POST" >
-<input type="submit" value="변환" >
+<input name ="ACNO" type ="text" value =<%=request.getParameter("ACNO")%>>
+<input type="submit" value="변환" 
+
+>
 </form>
 </body>
 </html>
