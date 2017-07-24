@@ -2,8 +2,23 @@
   - create database SB;
 2. 계정생성
   - create user py0777;
-  
+3. 
+drop table sb.ACA1000;
+drop table sb.RPD0100;  
+drop table sb.RPA0100;
+drop table sb.RPB1000;
+drop table sb.RPD1000;
+drop table sb.RPD1010;
 3. 테이블생성
+/*1.고객기본*/
+CREATE TABLE SB.ACA1000(
+  CUST_ID       VARCHAR(50)   NOT NULL /*고객ID*/
+, CUST_NM       VARCHAR(50)            /*고객명*/
+, HPNO         VARCHAR(11)             /*휴대전화번호*/
+, OPRT_TR_DTM  VARCHAR(16)             /*조작거래일시*/
+, PRIMARY KEY (CUST_ID)
+);
+
 /*1.채번*/
 CREATE TABLE SB.RPD0100(
   ACNO         VARCHAR(11)   NOT NULL /*계좌번호*/
@@ -55,7 +70,7 @@ CREATE TABLE SB.RPD1000(
 /*5.연계거래내역*/
 CREATE TABLE SB.RPD1010(
   TR_DT            VARCHAR(11) NOT NULL /*거래일자*/
-, ACNO             VARCHAR(8) NOT NULL /*계좌번호*/
+, ACNO             VARCHAR(11) NOT NULL /*계좌번호*/
 , TR_NO            INT(8)     NOT NULL /*거래번호*/
 , REL_TR_DT        VARCHAR(8)          /*연계거래일자*/
 , OPNT_ACNO        VARCHAR(11)         /*상대계좌번호*/
