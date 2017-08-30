@@ -17,6 +17,7 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		logger.debug(getClass().getName());
 		
 		logger.debug(requestData);
+
 		/*************************************************************
 		 * Declare Var
 		 *************************************************************/
@@ -40,6 +41,7 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;
+			
 		}	
 		/*************************************************************
 		 * Retrun Result Data

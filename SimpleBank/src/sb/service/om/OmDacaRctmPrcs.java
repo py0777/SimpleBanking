@@ -95,7 +95,10 @@ public class OmDacaRctmPrcs
 			e.printStackTrace();
 			
 			throw e;
-		}	
+		}finally{
+			
+			
+		}
 		/*************************************************************
 		 * Retrun Result Data
 		 *************************************************************/
