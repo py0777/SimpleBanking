@@ -5,38 +5,41 @@
 <mapper namespace="sb.repository.mapper.AcnoGenMapper">
 
 	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
-SELECT /*계좌번호 채번*/
-       LPAD(COALESCE(MAX(ACNO),0) + 1,10,'0') AS ACNO  /*계좌번호*/
+SELECT /*sb.repository.mapper.AcnoGenMapper.S001*/
+       LPAD(COALESCE(MAX(ACNO),0) + 1,11,'0') AS ACNO  /*계좌번호*/
   FROM SB.RPB1000  /*잔고*/
 
 ]]>
 	</select>
 
 	<select id="S002" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
-SELECT ACNO  /*계좌번호*/
+SELECT /*sb.repository.mapper.AcnoGenMapper.S002*/
+       ACNO  /*계좌번호*/
      , DACA  /*예수금*/
      , CUST_NM  /*예수금*/
      , OPRT_TR_DTM    /*조작거래일시*/
   FROM SB.RPB1000  /*잔고*/
- WHERE ACNO = '${IN_ACNO}'
+ WHERE ACNO = '${ACNO}'
 
 ]]>
 	</select>
 
 	<insert id="I001" parameterType="map" ><![CDATA[
-INSERT INTO SB.RPD0100
+INSERT /*sb.repository.mapper.AcnoGenMapper.I001*/
+  INTO SB.RPD0100
 (ACNO, LAST_TRNO, LAST_TRDT,OPRT_TR_DTM )
 VALUES
-('${ACNO}', '${LAST_TRNO}', '${LAST_TRDT}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
+('${ACNO}', ${LAST_TRNO}, '${LAST_TRDT}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
 
 ]]>
 	</insert>
 	
 	<insert id="I002" parameterType="map" ><![CDATA[
-INSERT INTO SB.RPB1000
+INSERT /*sb.repository.mapper.AcnoGenMapper.I002*/
+  INTO SB.RPB1000
 (ACNO, DACA, CUST_NM,OPRT_TR_DTM )
 VALUES
-('${ACNO}', '${DACA}', '${CUST_NM}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
+('${ACNO}', 0, '${CUST_NM}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
 
 ]]>
 	</insert>

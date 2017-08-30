@@ -7,7 +7,7 @@
 	<properties resource="mybatis.properties">
 	<!--properties url="file:d:\mybatis.properties"-->
 	  
-	  <property name="jdbc.driver" value="com.mysql.jdbc.Driver" />
+	  <property name="jdbc.driver" value="org.mariadb.jdbc.Driver" />
 	  <property name="jdbc.username" value="root"/>
 	  <property name="jdbc.password" value="1111"/>
 	</properties>
@@ -38,7 +38,7 @@
 	
 	<!-- 플러그인 -->
 	<plugins>
-		<plugin interceptor="mm.common.plugin.ExecutorPlugin">
+		<plugin interceptor="sb.common.plugin.ExecutorPlugin">
 			<property name="property" value="plugin test"/>
 		</plugin>
 	</plugins>
@@ -67,8 +67,13 @@
 	
 	<!-- 매퍼정의 -->
 	<mappers>
-		<mapper resource="mm/repository/mapper/SqlTranInqMapper.xml" />
-		<mapper resource="mm/repository/mapper/CodeMapper.xml" />
-		<mapper resource="mm/repository/mapper/ColMapper.xml" />
+		<mapper resource="sb/repository/mapper/AcnoGen.xml" />
+		<mapper resource="sb/repository/mapper/DacaDrwgRfct.xml" />
+		<mapper resource="sb/repository/mapper/DacaRctmPrcs.xml" />
+		<mapper resource="sb/repository/mapper/DacaRctmRfct.xml" />
+		<mapper resource="sb/repository/mapper/RPA0100_Default.xml" />
+		<mapper resource="sb/repository/mapper/RPB1000_Default.xml" />
+		<mapper resource="sb/repository/mapper/RPD1000_Default.xml" />
+		<mapper resource="sb/repository/mapper/RPD1010_Default.xml" />
 	</mappers>
 </configuration>
