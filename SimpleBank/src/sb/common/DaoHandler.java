@@ -45,6 +45,7 @@ public class DaoHandler extends AbstractRepository{
 		} finally {
 			sqlSession.close();
 			/* test */
+			
 		}
 	}
 	
@@ -59,7 +60,6 @@ public class DaoHandler extends AbstractRepository{
 			
 			return cnt;
 		} finally {
-			sqlSession.commit();
 			sqlSession.close();
 			/* test */
 		}
@@ -75,7 +75,6 @@ public class DaoHandler extends AbstractRepository{
 			return cnt;
 			
 		} finally {
-			sqlSession.commit();
 			sqlSession.close();
 			/* test */
 		}
