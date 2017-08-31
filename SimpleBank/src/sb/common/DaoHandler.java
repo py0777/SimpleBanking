@@ -78,5 +78,35 @@ public class DaoHandler extends AbstractRepository{
 			sqlSession.close();
 			/* test */
 		}
+	}
+	
+	public int txCommit() {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int cnt = 0;
+		try {
+			
+			sqlSession.commit();
+			logger.debug("txCommit" + sqlSession);
+			return cnt;
+			
+		} finally {
+			sqlSession.close();
+			/* test */
+		}
+	}
+	
+	public int txRollback() {
+		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		int cnt = 0;
+		try {
+			
+			sqlSession.rollback();
+			logger.debug("txRollback" + sqlSession);
+			return cnt;
+			
+		} finally {
+			sqlSession.close();
+			/* test */
+		}
 	}	
 }

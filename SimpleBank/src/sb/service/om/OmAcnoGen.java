@@ -4,11 +4,14 @@ import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
 
+import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 
+import sb.common.DaoHandler;
+import sb.repository.AbstractRepository;
 import sb.service.cm.CmAcnoGen;
 
-public class OmAcnoGen
+public class OmAcnoGen 
 {
 static Logger logger = Logger.getLogger(CmAcnoGen.class);
 	
@@ -22,7 +25,6 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		 * Declare Var
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
-		
 		CmAcnoGen cmAcnoGen = new CmAcnoGen();
 		
 		try
@@ -39,10 +41,15 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 			
 			
 		}catch (Exception e) {
+			
 			e.printStackTrace();
 			throw e;
 			
-		}	
+		}
+		finally{
+			logger.debug("finally");
+			
+		}
 		/*************************************************************
 		 * Retrun Result Data
 		 *************************************************************/
