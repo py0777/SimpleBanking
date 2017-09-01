@@ -26,9 +26,10 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		CmAcnoGen cmAcnoGen = new CmAcnoGen();
-		
+		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		try
-		{
+		{	
+			
 			/********************************************************************
 			 *  입력값 체크
 			 ********************************************************************/
@@ -39,14 +40,16 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 			 ********************************************************************/
 			responseData = cmAcnoGen.cmAcnoGen(requestData);
 			
-			
+			dh.getSession().commit();
 		}catch (Exception e) {
 			
 			e.printStackTrace();
+			dh.getSession().rollback();
 			throw e;
 			
 		}
 		finally{
+			dh.closeSession();
 			logger.debug("finally");
 			
 		}

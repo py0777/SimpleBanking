@@ -14,7 +14,7 @@ public class DaoHandler extends AbstractRepository{
 	
 	static Logger logger = Logger.getLogger(DaoHandler.class);
 	public IDataSet selectSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = getSession();
 		try {
 			String statement = SqlID;
 			
@@ -27,14 +27,13 @@ public class DaoHandler extends AbstractRepository{
 			logger.debug(ds);
 			return ds;
 		} finally {
-			sqlSession.close();
 			/* test */
 		}
 	}
 		
 	
 	public HashMap selectOneSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = getSession();
 		try {
 			String statement = SqlID;
 			
@@ -43,7 +42,6 @@ public class DaoHandler extends AbstractRepository{
 			logger.debug(hm);
 			return hm;
 		} finally {
-			sqlSession.close();
 			/* test */
 			
 		}
@@ -51,7 +49,7 @@ public class DaoHandler extends AbstractRepository{
 	
 	
 	public int insertSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = getSession();
 		int cnt = 0;
 		
 		try {
@@ -60,13 +58,12 @@ public class DaoHandler extends AbstractRepository{
 			
 			return cnt;
 		} finally {
-			sqlSession.close();
-			/* test */
+			
 		}
 	}	
 	
 	public int updateSql(IDataSet requestData, String SqlID) {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
+		SqlSession sqlSession = getSession();
 		int cnt = 0;
 		try {
 			String statement = SqlID;
@@ -75,38 +72,6 @@ public class DaoHandler extends AbstractRepository{
 			return cnt;
 			
 		} finally {
-			sqlSession.close();
-			/* test */
-		}
-	}
-	
-	public int txCommit() {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		int cnt = 0;
-		try {
-			
-			sqlSession.commit();
-			logger.debug("txCommit" + sqlSession);
-			return cnt;
-			
-		} finally {
-			sqlSession.close();
-			/* test */
-		}
-	}
-	
-	public int txRollback() {
-		SqlSession sqlSession = getSqlSessionFactory().openSession();
-		int cnt = 0;
-		try {
-			
-			sqlSession.rollback();
-			logger.debug("txRollback" + sqlSession);
-			return cnt;
-			
-		} finally {
-			sqlSession.close();
-			/* test */
 		}
 	}	
 }
