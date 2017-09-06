@@ -82,7 +82,7 @@ public class CmTrDetlRfct {
 			rsCnt = dh.insertSql(dsRPB1000I01, rpd1000Dft+"."+"I001");
 			
 			if(rsCnt <=  0) {
-				throw new Exception( rpb1000Dft+"."+"U001"+" 등록오류.");
+				throw new Exception( rpb1000Dft+"."+"I001"+" 등록오류.");
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
