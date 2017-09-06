@@ -10,7 +10,7 @@ import sb.service.om.OmDacaRctmPrcs;
 
 public class PreServiceHandler {
 	
-	static Logger logger = Logger.getLogger(DaoHandler.class);
+	static Logger logger = Logger.getLogger(PreServiceHandler.class);
 	public IDataSet preServiceHandler(IDataSet requestData) throws Exception{
 		
 		
@@ -31,10 +31,10 @@ public class PreServiceHandler {
 				
 			}
 			else if("OmAcnoDacaInqr".equals(requestData.getField("SERVICE"))) {
-				
+				responseData= omAcnoDacaInqr.omAcnoDacaInqr(requestData);
 			}
 			else if("OmDacaRctmPrcs".equals(requestData.getField("SERVICE"))) {
-				
+				responseData= omDacaRctmPrcs.omDacaRctmPrcs(requestData);
 			}
 			
 			
@@ -44,7 +44,7 @@ public class PreServiceHandler {
 			
 			e.printStackTrace();
 			dh.getSession().rollback();
-				
+			/*에러는 무시하고 롤백만 함.*/	
 		} finally {
 			dh.closeSession();
 		}
