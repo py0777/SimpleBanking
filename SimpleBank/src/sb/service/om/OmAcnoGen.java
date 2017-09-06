@@ -1,14 +1,10 @@
 package sb.service.om;
 
+import org.apache.log4j.Logger;
+
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 import nexcore.framework.core.util.StringUtils;
-
-import org.apache.ibatis.session.SqlSession;
-import org.apache.log4j.Logger;
-
-import sb.common.DaoHandler;
-import sb.repository.AbstractRepository;
 import sb.service.cm.CmAcnoGen;
 
 public class OmAcnoGen 
@@ -26,7 +22,7 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		CmAcnoGen cmAcnoGen = new CmAcnoGen();
-		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
+		
 		try
 		{	
 			
@@ -40,16 +36,16 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 			 ********************************************************************/
 			responseData = cmAcnoGen.cmAcnoGen(requestData);
 			
-			dh.getSession().commit();
+			
 		}catch (Exception e) {
 			
 			e.printStackTrace();
-			dh.getSession().rollback();
+		
 			throw e;
 			
 		}
 		finally{
-			dh.closeSession();
+			
 			logger.debug("finally");
 			
 		}
