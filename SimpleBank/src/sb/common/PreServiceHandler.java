@@ -7,7 +7,9 @@ import nexcore.framework.core.data.IDataSet;
 import sb.service.om.OmAcnoDacaInqr;
 import sb.service.om.OmAcnoGen;
 import sb.service.om.OmDacaRctmPrcs;
+import javax.ws.rs.*;
 
+@Path("helloworld")
 public class PreServiceHandler {
 	
 	static Logger logger = Logger.getLogger(PreServiceHandler.class);
@@ -27,6 +29,7 @@ public class PreServiceHandler {
 		try 
 		{
 			if("OmAcnoGen".equals(requestData.getField("SERVICE"))) {
+				logger.debug("########### OmAcnoGen START #########");
 				responseData= omAcnoGen.omAcnoGen(requestData);
 				
 			}
@@ -51,4 +54,10 @@ public class PreServiceHandler {
 		
 		return responseData;
 	}
+	
+	 @GET
+	 @Produces("text/plain")
+	 public String getMessage() {
+	      return "Rest Never Sleeps";
+	 }
 }

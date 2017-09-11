@@ -1,4 +1,4 @@
-<%@page import= "sb.service.om.OmAcnoGen"%>
+<%@page import= "sb.common.PreServiceHandler"%>
 <%@page import="nexcore.framework.core.data.IRecordSet"%>
 <%@page import="nexcore.framework.core.util.StringUtils"%>
 <%@page import= "nexcore.framework.core.data.RecordSet"%>
@@ -25,12 +25,13 @@ request.setCharacterEncoding("UTF-8");/* 한글깨짐 현상 없애기 위함*/
 
 IDataSet requestData = new DataSet();
 
-OmAcnoGen oag = new OmAcnoGen();
+PreServiceHandler psh = new PreServiceHandler();
 if(!StringUtils.isEmpty(request.getParameter("ACNO"))
 		&& !"null".equals(request.getParameter("ACNO"))){
 		
+		requestData.putField("SERVICE", "OmAcnoGen");
 		requestData.putField("ACNO", request.getParameter("ACNO").toUpperCase());
-		IDataSet responseData = oag.omAcnoGen(requestData);
+		IDataSet responseData = psh.preServiceHandler(requestData);
 }
 %>
 
