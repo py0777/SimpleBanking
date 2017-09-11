@@ -2,8 +2,8 @@ package sb.common;
 
 import org.apache.log4j.Logger;
 
+import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
-
 import sb.service.om.OmAcnoDacaInqr;
 import sb.service.om.OmAcnoGen;
 import sb.service.om.OmDacaRctmPrcs;
@@ -39,7 +39,7 @@ public class PreServiceHandler {
 			
 			
 			dh.getSession().commit();
-			return responseData;
+			
 		}catch (Exception e) {
 			
 			e.printStackTrace();
@@ -48,5 +48,7 @@ public class PreServiceHandler {
 		} finally {
 			dh.closeSession();
 		}
+		
+		return responseData;
 	}
 }
