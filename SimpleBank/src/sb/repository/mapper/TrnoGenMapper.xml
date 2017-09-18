@@ -7,8 +7,8 @@
 	<select id="S001" parameterType="map" resultType="java.util.HashMap" ><![CDATA[
 SELECT /*sb.repository.mapper.TrnoGenMapper.S001*/
         ACNO  /*계좌번호*/
-     , LAST_TRNO  /*최종거래번호*/
-     , LAST_TRDT  /*최종거래일자*/
+     , LAST_TR_NO  /*최종거래번호*/
+     , LAST_TR_DT  /*최종거래일자*/
   FROM SB.RPD0100  /*채번*/
  WHERE ACNO = '${ACNO}'
 
@@ -19,7 +19,7 @@ SELECT /*sb.repository.mapper.TrnoGenMapper.S001*/
 	<update id="U001" parameterType="map" ><![CDATA[
 UPDATE /*sb.repository.mapper.TrnoGenMapper.U001*/
        SB.RPD0100
-     SET TRNO = ${TRNO}
+     SET LAST_TR_NO = ${LAST_TR_NO}
          , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
 WHERE ACNO = '${ACNO}'
 ]]>

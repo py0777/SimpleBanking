@@ -75,5 +75,6 @@
 		<mapper resource="sb/repository/mapper/RPB1000_Default.xml" />
 		<mapper resource="sb/repository/mapper/RPD1000_Default.xml" />
 		<mapper resource="sb/repository/mapper/RPD1010_Default.xml" />
+		<mapper resource="sb/repository/mapper/TrnoGenMapper.xml" />
 	</mappers>
 </configuration>

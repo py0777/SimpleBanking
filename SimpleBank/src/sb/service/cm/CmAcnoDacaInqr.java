@@ -12,7 +12,7 @@ import sb.common.DaoHandler;
 
 public class CmAcnoDacaInqr
 {
-	static Logger logger = Logger.getLogger(CmAcnoGen.class);
+	static Logger logger = Logger.getLogger(CmAcnoDacaInqr.class);
 	private final String rpb1000Dft = "sb.repository.mapper.RPB1000_DefaultMapper";
 	
 	public IDataSet cmAcnoDacaInqr(IDataSet requestData)throws Exception{

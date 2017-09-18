@@ -27,9 +27,9 @@ SELECT /*sb.repository.mapper.AcnoGenMapper.S002*/
 	<insert id="I001" parameterType="map" ><![CDATA[
 INSERT /*sb.repository.mapper.AcnoGenMapper.I001*/
   INTO SB.RPD0100
-(ACNO, LAST_TRNO, LAST_TRDT,OPRT_TR_DTM )
+(ACNO, LAST_TR_NO, LAST_TR_DT,OPRT_TR_DTM )
 VALUES
-('${ACNO}', ${LAST_TRNO}, '${LAST_TRDT}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
+('${ACNO}', ${LAST_TR_NO}, '${LAST_TR_DT}', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'))
 
 ]]>
 	</insert>

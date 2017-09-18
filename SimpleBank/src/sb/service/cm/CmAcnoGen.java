@@ -83,8 +83,8 @@ public class CmAcnoGen {
 			
 			/*채번테이블  생성*/
 			dsI000In.putField("ACNO", sAcno);
-			dsI000In.putField("LAST_TRNO", 0);
-			dsI000In.putField("LAST_TRDT", "00000000");
+			dsI000In.putField("LAST_TR_NO", 0);
+			dsI000In.putField("LAST_TR_DT", "00000000");
 			
 			
 			rsCnt =  dh.insertSql(dsI000In, namespace+"."+"I001");

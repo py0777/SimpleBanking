@@ -51,6 +51,7 @@ public class CmDacaRctmRfct {
 			}
 			
 			dsU001.putField("DACA", l_bfDaca + requestData.getLongField("RCTM_AMT"));
+			dsU001.putField("ACNO", requestData.getField("ACNO"));
 			
 			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
 			

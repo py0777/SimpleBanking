@@ -66,7 +66,7 @@ public class CmTrDetlRfct {
 			
 			dsRPB1000I01.putField("TR_DT", requestData.getField("TR_DT"));
 			dsRPB1000I01.putField("ACNO", requestData.getField("ACNO"));
-			dsRPB1000I01.putField("TR_NO", requestData.getLongField("TR_SN"));
+			dsRPB1000I01.putField("TR_NO", requestData.getLongField("TR_NO"));
 			dsRPB1000I01.putField("SYNS_CD", requestData.getField("SYNS_CD"));
 			dsRPB1000I01.putField("TR_TP_DCD", rpa0100Q01MapOut.get("TR_TP_DCD"));
 			dsRPB1000I01.putField("TR_AMT", requestData.getLongField("TR_AMT"));
@@ -112,7 +112,7 @@ public class CmTrDetlRfct {
 			}
 			
 			/*거래번호체크*/
-			if( requestData.getLongField("TR_SN") <= 0) {
+			if( requestData.getLongField("TR_NO") <= 0) {
 				throw new Exception("거래번호 확인하세요.");
 			}
 	}

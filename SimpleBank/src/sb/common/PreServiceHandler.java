@@ -74,7 +74,7 @@ public class PreServiceHandler {
 	 @GET
 	 @Produces(MediaType.APPLICATION_JSON)
 	 /*application/json text/plain  */
-	 public String getMessage(@QueryParam("SERVICE_NAME")String serviceName,@QueryParam("ACNO")String acno) {
+	 public String getMessage(@QueryParam("SERVICE_NAME")String serviceName,@QueryParam("ACNO")String acno,@QueryParam("TOT_TR_AMT")long totAmt) {
 		/*************************************************************
 		 * Declare Var
 		 *************************************************************/
@@ -85,6 +85,7 @@ public class PreServiceHandler {
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		
 		OmAcnoGen omAcnoGen = new OmAcnoGen();
+		OmDacaRctmPrcs omDacaRctmPrcs = new OmDacaRctmPrcs();
 		try 
 		{
 			 if("OmAcnoGen".equals(serviceName)) {
@@ -93,7 +94,13 @@ public class PreServiceHandler {
 					responseData= omAcnoGen.omAcnoGen(requestData);
 					logger.debug("responseData.getFieldMap()"+responseData.getRecordSet("ResultSet"));
 					
-					
+			 }
+			 else if("OmDacaRctmPrcs".equals(serviceName)) {
+					logger.debug("########### OmAcnoGen START #########");
+					requestData.putField("ACNO", acno);
+					requestData.putField("TOT_TR_AMT", totAmt);
+					responseData= omDacaRctmPrcs.omDacaRctmPrcs(requestData);
+					logger.debug("responseData.getFieldMap()"+responseData.getRecordSet("ResultSet"));
 					
 			 }
 			dh.getSession().commit();

@@ -12,7 +12,6 @@ SELECT /*sb.repository.mapper.RPB1000_DefaultMapper.S001*/
      , OPRT_TR_DTM /*조작거래일시*/
   FROM SB.RPB1000  /*예수금잔고*/
  WHERE ACNO = '${ACNO}'
-
 ]]>
 	</select>
 

@@ -57,23 +57,26 @@ public class CmTrnoGen {
 			
 			/*채번 값 설정*/
 			if(today.compareTo(String.valueOf(s001MapOut.get("LAST_TR_DT"))) < 0) {
+				logger.error("최종거래일자("+s001MapOut.get("LAST_TR_DT") +") 당일 ("+ today+")보다 큽니다.");
 				throw new Exception("최종거래일자가 당일보다 큽니다.");
 			}
 			
-			if(today.compareTo(String.valueOf(s001MapOut.get("LAST_TRDT"))) > 0) {
+			if(today.compareTo(String.valueOf(s001MapOut.get("LAST_TR_DT"))) > 0) {
 				l_trno = 1;
 			}
 			else{
 				
-				l_trno = (Long)s001MapOut.get("LAST_TRNO") + 1;
+				l_trno = Long.parseLong(String.valueOf(s001MapOut.get("LAST_TR_NO"))) + 1;
 			}
 			/*채번테이블 갱신*/
+			requestData.putField("LAST_TR_NO", l_trno);
+			requestData.putField("LAST_TR_DT", requestData.getField("TR_DT"));
 			rsCnt = dh.updateSql(requestData, namespace+"."+"U001");
 	
 			if(rsCnt <=  0) {
 				throw new Exception( namespace+"."+"U001"+" 처리 건수 없음.");
 			}
-			responseData.putField("TRNO", l_trno);
+			responseData.putField("TR_NO", l_trno);
 		}catch (Exception e) {
 			e.printStackTrace();
 			throw e;

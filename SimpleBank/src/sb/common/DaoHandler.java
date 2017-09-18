@@ -1,6 +1,6 @@
 package sb.common;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
@@ -32,12 +32,12 @@ public class DaoHandler extends AbstractRepository{
 	}
 		
 	
-	public HashMap selectOneSql(IDataSet requestData, String SqlID) {
+	public Map selectOneSql(IDataSet requestData, String SqlID) {
 		SqlSession sqlSession = getSession();
 		try {
 			String statement = SqlID;
 			
-			HashMap hm = sqlSession.selectOne(statement, requestData);
+			Map hm = sqlSession.selectOne(statement, requestData.getFieldMap());
 			
 			logger.debug(hm);
 			return hm;

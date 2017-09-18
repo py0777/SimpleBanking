@@ -17,8 +17,8 @@ SELECT /*sb.repository.mapper.DacaRctmRfctMapper.S001*/
 
 	<update id="U001" parameterType="map" ><![CDATA[
 UPDATE /*sb.repository.mapper.DacaRctmRfctMapper.U001*/
-       SB.RPB0100
-   SET DACA = '${DACA}'
+       SB.RPB1000
+   SET DACA = ${DACA}
      , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
  WHERE ACNO = '${ACNO}'
 ]]>

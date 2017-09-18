@@ -22,8 +22,8 @@ CREATE TABLE SB.ACA1000(
 /*1.채번*/
 CREATE TABLE SB.RPD0100(
   ACNO         VARCHAR(11)   NOT NULL /*계좌번호*/
-, LAST_TRNO    INT(8)       NOT NULL /*최종거래번호*/
-, LAST_TRDT    VARCHAR(8)   NOT NULL /*최종거래일자*/
+, LAST_TR_NO    INT(8)       NOT NULL /*최종거래번호*/
+, LAST_TR_DT    VARCHAR(8)   NOT NULL /*최종거래일자*/
 , OPRT_TR_DTM  VARCHAR(16)           /*조작거래일시*/
 , PRIMARY KEY (ACNO)
 );
@@ -81,6 +81,9 @@ CREATE TABLE SB.RPD1010(
 , OPRT_TR_DTM      VARCHAR(16)         /*조작거래일시*/
 , PRIMARY KEY (TR_DT,ACNO,TR_NO)
 );
+
+INSERT INTO SB.RPA0100 ( SYNS_CD, SYNS_NM , TR_TP_DCD , CNCL_SYNS_NM , OPRT_TR_DTM) VALUES ('001', '입금', '01', '입금취소', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'));
+INSERT INTO SB.RPA0100 ( SYNS_CD, SYNS_NM , TR_TP_DCD , CNCL_SYNS_NM , OPRT_TR_DTM) VALUES ('002', '출금', '02', '출금취소', DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s'));
 
 /*데이터베이스 사용*/
 USE SB;

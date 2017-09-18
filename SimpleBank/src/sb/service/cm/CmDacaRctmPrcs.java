@@ -42,7 +42,7 @@ public class CmDacaRctmPrcs {
 			
 			drrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
 			drrDsIn.putField("ACNO", requestData.getField("ACNO"));
-			drrDsIn.putField("RCTM_AMT", requestData.getField("RCTM_AMT"));
+			drrDsIn.putField("RCTM_AMT", requestData.getField("TOT_TR_AMT"));
 			
 			drrDsOut = drr.cmDacaRctmRfct(drrDsIn);
 			
@@ -54,7 +54,7 @@ public class CmDacaRctmPrcs {
 			
 			tdrDsIn.putField("TR_DT", requestData.getField("TR_DT"));
 			tdrDsIn.putField("ACNO", requestData.getField("ACNO"));
-			tdrDsIn.putField("TR_NO", requestData.getLongField("TR_SN"));
+			tdrDsIn.putField("TR_NO", requestData.getLongField("TR_NO"));
 			tdrDsIn.putField("SYNS_CD", requestData.getField("SYNS_CD"));
 			tdrDsIn.putField("TR_AMT", requestData.getLongField("TR_AMT"));
 			tdrDsIn.putField("BF_DACA", drrDsOut.getLongField("BF_DACA"));
@@ -98,12 +98,12 @@ public class CmDacaRctmPrcs {
 		}
 		
 		/*거래번호*/
-		if( requestData.getLongField("TR_SN") <= 0) {
+		if( requestData.getLongField("TR_NO") <= 0) {
 			throw new Exception("거래번호 확인하세요.");
 		}
 		
 		/*시작거래번호*/
-		if( requestData.getLongField("STRT_TR_SN") <= 0) {
+		if( requestData.getLongField("STRT_TR_NO") <= 0) {
 			throw new Exception("시작거래번호 확인하세요.");
 		}
 		

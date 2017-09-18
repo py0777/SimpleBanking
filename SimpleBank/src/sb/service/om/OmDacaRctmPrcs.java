@@ -83,7 +83,7 @@ public class OmDacaRctmPrcs
 			cmDacaRctmPrcsDSIn.putField("TR_DT", requestData.getField("TR_DT") );			
 			cmDacaRctmPrcsDSIn.putField("ACNO", requestData.getField("ACNO") );
 			cmDacaRctmPrcsDSIn.putField("TR_NO", cmTrnoGenDsOut.getLongField("TR_NO") );
-			cmDacaRctmPrcsDSIn.putField("STRT_TR_SN", cmTrnoGenDsOut.getLongField("TR_NO") );
+			cmDacaRctmPrcsDSIn.putField("STRT_TR_NO", cmTrnoGenDsOut.getLongField("TR_NO") );
 			cmDacaRctmPrcsDSIn.putField("TOT_TR_AMT", requestData.getLongField("TOT_TR_AMT"));
 			cmDacaRctmPrcsDSIn.putField("SYNS_CD", "001");  /* 적요코드 001: 입금*/
 			
