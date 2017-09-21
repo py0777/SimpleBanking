@@ -11,7 +11,7 @@ import sb.common.DaoHandler;
 
 public class CmDacaRctmRfct {
 
-	static Logger logger = Logger.getLogger(CmAcnoGen.class);
+	static Logger logger = Logger.getLogger(CmDacaRctmRfct.class);
 	private final String namespace = "sb.repository.mapper.DacaRctmRfctMapper";
 	
 	public IDataSet cmDacaRctmRfct(IDataSet requestData) throws Exception{

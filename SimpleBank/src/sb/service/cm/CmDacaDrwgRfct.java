@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import sb.common.DaoHandler;
 
 public class CmDacaDrwgRfct {
-	static Logger logger = Logger.getLogger(CmAcnoGen.class);
+	static Logger logger = Logger.getLogger(CmDacaDrwgRfct.class);
 	private final String namespace = "sb.repository.mapper.DacaDrwgRfctMapper";
 	
 	public IDataSet cmDacaDrwgRfct(IDataSet requestData) throws Exception{
@@ -51,7 +51,8 @@ public class CmDacaDrwgRfct {
 				throw new Exception( "예수금이 음수입니다.");
 			}
 			
-			dsU001.putField("DACA", l_bfDaca - requestData.getLongField("RCTM_AMT"));
+			dsU001.putField("DACA", l_bfDaca - requestData.getLongField("DRWG_AMT"));
+			dsU001.putField("ACNO", requestData.getField("ACNO"));
 			
 			rsCnt = dh.updateSql(dsU001, namespace+"."+"U001");
 			

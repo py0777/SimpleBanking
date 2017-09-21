@@ -20,8 +20,9 @@ SELECT /*sb.repository.mapper.TrnoGenMapper.S001*/
 UPDATE /*sb.repository.mapper.TrnoGenMapper.U001*/
        SB.RPD0100
      SET LAST_TR_NO = ${LAST_TR_NO}
-         , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
-WHERE ACNO = '${ACNO}'
+       , LAST_TR_DT = ${LAST_TR_DT}
+       , OPRT_TR_DTM = DATE_FORMAT(SYSDATE(),'%Y%m%d%H%i%s')
+ WHERE ACNO = '${ACNO}'
 ]]>
 	</update>	
 </mapper>

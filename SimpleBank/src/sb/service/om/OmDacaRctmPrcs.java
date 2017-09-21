@@ -17,7 +17,7 @@ import sb.service.cm.CmTrnoGen;
 
 public class OmDacaRctmPrcs
 {
-	static Logger logger = Logger.getLogger(CmAcnoGen.class);
+	static Logger logger = Logger.getLogger(OmDacaRctmPrcs.class);
 	
 	public IDataSet omDacaRctmPrcs(IDataSet requestData)throws Exception{
 		logger.debug("###########  START #########");
@@ -95,10 +95,8 @@ public class OmDacaRctmPrcs
 			e.printStackTrace();
 			
 			throw e;
-		}finally{
-			
-			
 		}
+		
 		/*************************************************************
 		 * Retrun Result Data
 		 *************************************************************/

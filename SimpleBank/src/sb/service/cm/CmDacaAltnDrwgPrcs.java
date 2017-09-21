@@ -89,7 +89,7 @@ public class CmDacaAltnDrwgPrcs
 			
 			cmTrDetlRfctDsIn.putField("TR_DT", requestData.getField("TR_DT"));
 			cmTrDetlRfctDsIn.putField("ACNO", requestData.getField("DRWG_ACNO"));
-			cmTrDetlRfctDsIn.putField("TR_NO", requestData.getLongField("DRWG_TR_SN"));
+			cmTrDetlRfctDsIn.putField("TR_NO", requestData.getLongField("DRWG_TR_NO"));
 			cmTrDetlRfctDsIn.putField("SYNS_CD", requestData.getField("DRWG_SYNS_CD"));
 			cmTrDetlRfctDsIn.putField("TR_AMT", requestData.getLongField("ATLN_AMT"));
 			cmTrDetlRfctDsIn.putField("BF_DACA", cmDacaDrwgRfctDsOut.getLongField("BF_DACA"));
@@ -109,10 +109,10 @@ public class CmDacaAltnDrwgPrcs
 			
 			dsRPB1010I01.putField("TR_DT", requestData.getField("TR_DT"));
 			dsRPB1010I01.putField("ACNO", requestData.getField("DRWG_ACNO"));
-			dsRPB1010I01.putField("TR_NO", requestData.getLongField("DRWG_TR_SN"));
+			dsRPB1010I01.putField("TR_NO", requestData.getLongField("DRWG_TR_NO"));
 			dsRPB1010I01.putField("REL_TR_DT", requestData.getField("TR_DT"));
 			dsRPB1010I01.putField("OPNT_ACNO", requestData.getField("RCTM_ACNO"));
-			dsRPB1010I01.putField("OPNT_TR_NO", requestData.getLongField("RCTM_TR_SN"));
+			dsRPB1010I01.putField("OPNT_TR_NO", requestData.getLongField("RCTM_TR_NO"));
 			//dsRPB1010I01.putField("REL_COM_ACTNO", requestData.getLongField("BF_DACA"));
 			//dsRPB1010I01.putField("OPNT_ACT_NM", requestData.getLongField("AF_DACA"));
 			//dsRPB1010I01.putField("REL_COM_CD", "N");
@@ -132,7 +132,7 @@ public class CmDacaAltnDrwgPrcs
 			
 			cmDacaRctmRfctDsIn.putField("TR_DT", requestData.getField("TR_DT"));
 			cmDacaRctmRfctDsIn.putField("ACNO", requestData.getField("RCTM_ACNO"));
-			cmDacaRctmRfctDsIn.putField("DRWG_AMT", requestData.getField("ATLN_AMT"));
+			cmDacaRctmRfctDsIn.putField("RCTM_AMT", requestData.getField("ATLN_AMT"));
 			
 			cmDacaRctmRfctDsOut= cmDacaRctmRfct.cmDacaRctmRfct(cmDacaRctmRfctDsIn);
 			
@@ -144,20 +144,20 @@ public class CmDacaAltnDrwgPrcs
 			
 			rctmTrDetlRfctDsIn.putField("TR_DT", requestData.getField("TR_DT"));
 			rctmTrDetlRfctDsIn.putField("ACNO", requestData.getField("RCTM_ACNO"));
-			rctmTrDetlRfctDsIn.putField("TR_NO", requestData.getLongField("RCTM_TR_SN"));
+			rctmTrDetlRfctDsIn.putField("TR_NO", requestData.getLongField("RCTM_TR_NO"));
 			rctmTrDetlRfctDsIn.putField("SYNS_CD", requestData.getField("RCTM_SYNS_CD"));
 			rctmTrDetlRfctDsIn.putField("TR_AMT", requestData.getLongField("ATLN_AMT"));
-			rctmTrDetlRfctDsIn.putField("BF_DACA", cmDacaDrwgRfctDsOut.getLongField("BF_DACA"));
-			rctmTrDetlRfctDsIn.putField("AF_DACA", cmDacaDrwgRfctDsOut.getLongField("AF_DACA"));
+			rctmTrDetlRfctDsIn.putField("BF_DACA", cmDacaRctmRfctDsOut.getLongField("BF_DACA"));
+			rctmTrDetlRfctDsIn.putField("AF_DACA", cmDacaRctmRfctDsOut.getLongField("AF_DACA"));
 			rctmTrDetlRfctDsIn.putField("CNCL_YN", "N");
 			rctmTrDetlRfctDsIn.putField("STRT_TR_NO", requestData.getLongField("RCTM_STRT_TR_NO"));
 			
 			
-			rctmTrDetlRfctDsOut= rctmTrDetlRfct.cmTrDetlRfct(cmTrDetlRfctDsIn);
+			rctmTrDetlRfctDsOut= rctmTrDetlRfct.cmTrDetlRfct(rctmTrDetlRfctDsIn);
 			/********************************************************************
 			 *  출력자료 조립
 			 ********************************************************************/
-			
+			responseData = rctmTrDetlRfctDsOut;
 			
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -191,7 +191,7 @@ public class CmDacaAltnDrwgPrcs
 		}
 		
 		/*출금거래번호*/
-		if( requestData.getLongField("DRWG_TR_SN") <= 0) {
+		if( requestData.getLongField("DRWG_TR_NO") <= 0) {
 			logger.error("거래번호를 확인하세요.");
 			throw new Exception("거래번호를 확인하세요.");
 		}
@@ -204,7 +204,7 @@ public class CmDacaAltnDrwgPrcs
 		}
 		
 		/*입금거래번호*/
-		if( requestData.getLongField("RCTM_TR_SN") <= 0) {
+		if( requestData.getLongField("RCTM_TR_NO") <= 0) {
 			logger.error("입금거래번호를 확인하세요.");
 			throw new Exception("입금거래번호를 확인하세요.");
 		}

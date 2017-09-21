@@ -1,21 +1,20 @@
 package sb.common;
 
-import java.util.Map;
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import nexcore.framework.core.data.CaseIgnoreHashMap;
 import nexcore.framework.core.data.DataSet;
 import nexcore.framework.core.data.IDataSet;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONObject;
 
 import sb.service.om.OmAcnoDacaInqr;
 import sb.service.om.OmAcnoGen;
+import sb.service.om.OmDacaAltnDrwgPrcs;
 import sb.service.om.OmDacaRctmPrcs;
 
 @Path("helloworld")
@@ -74,18 +73,18 @@ public class PreServiceHandler {
 	 @GET
 	 @Produces(MediaType.APPLICATION_JSON)
 	 /*application/json text/plain  */
-	 public String getMessage(@QueryParam("SERVICE_NAME")String serviceName,@QueryParam("ACNO")String acno,@QueryParam("TOT_TR_AMT")long totAmt) {
+	 public String getMessage(@QueryParam("SERVICE_NAME")String serviceName,@QueryParam("ACNO")String acno,@QueryParam("TOT_TR_AMT")long totAmt,@QueryParam("DRWG_ACNO")String drwgAcno,@QueryParam("RCTM_ACNO")String rctmAcno) {
 		/*************************************************************
 		 * Declare Var
 		 *************************************************************/
 		IDataSet responseData = new DataSet();
 		IDataSet requestData = new DataSet();
-		CaseIgnoreHashMap hsm  = null;
-		
+		JSONObject jsonObject = new JSONObject();
 		DaoHandler dh = new DaoHandler();  /*DAO Handler*/
 		
 		OmAcnoGen omAcnoGen = new OmAcnoGen();
 		OmDacaRctmPrcs omDacaRctmPrcs = new OmDacaRctmPrcs();
+		OmDacaAltnDrwgPrcs omDacaAltnDrwgPrcs = new OmDacaAltnDrwgPrcs();
 		try 
 		{
 			 if("OmAcnoGen".equals(serviceName)) {
@@ -93,15 +92,24 @@ public class PreServiceHandler {
 					requestData.putField("ACNO", acno);
 					responseData= omAcnoGen.omAcnoGen(requestData);
 					logger.debug("responseData.getFieldMap()"+responseData.getRecordSet("ResultSet"));
-					
+					jsonObject.put("result", responseData.getFieldMap());
 			 }
 			 else if("OmDacaRctmPrcs".equals(serviceName)) {
-					logger.debug("########### OmAcnoGen START #########");
+					logger.debug("########### OmDacaRctmPrcs START #########");
 					requestData.putField("ACNO", acno);
 					requestData.putField("TOT_TR_AMT", totAmt);
 					responseData= omDacaRctmPrcs.omDacaRctmPrcs(requestData);
-					logger.debug("responseData.getFieldMap()"+responseData.getRecordSet("ResultSet"));
-					
+					logger.debug("responseData.getFieldMap()"+responseData.getFieldMap());
+					jsonObject.put("result", responseData.getFieldMap());
+			 }
+			 else if("OmDacaAltnDrwgPrcs".equals(serviceName)) {
+					logger.debug("########### OmDacaAltnDrwgPrcs START #########");
+					requestData.putField("DRWG_ACNO", drwgAcno);
+					requestData.putField("RCTM_ACNO", rctmAcno);
+					requestData.putField("TOT_TR_AMT", totAmt);
+					responseData= omDacaAltnDrwgPrcs.omDacaAltnDrwgPrcs(requestData);
+					logger.debug("responseData.getFieldMap()"+responseData.getFieldMap());
+					jsonObject.put("result", responseData.getFieldMap());
 			 }
 			dh.getSession().commit();
 			
@@ -114,6 +122,6 @@ public class PreServiceHandler {
 			dh.closeSession();
 		}
 		 
-	      return acno;
+	      return String.valueOf(jsonObject);
 	 }
 }
