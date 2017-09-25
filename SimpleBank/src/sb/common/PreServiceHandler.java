@@ -73,7 +73,7 @@ public class PreServiceHandler {
 //	 }
 	 
 	 @GET
-	 @Produces(MediaType.APPLICATION_JSON)
+	 @Produces(MediaType.APPLICATION_JSON+ ";charset=UTF-8")
 	 /*application/json text/plain  */
 	 public String getMessage(@QueryParam("SERVICE_NAME")String serviceName,@QueryParam("ID")String acno,@QueryParam("amount")long totAmt,@QueryParam("ID_send")String drwgAcno,@QueryParam("ID_rcv")String rctmAcno) throws Exception {
 		/*************************************************************
@@ -131,6 +131,7 @@ public class PreServiceHandler {
 			
 		}catch (Exception e) {
 			json.put("retrun_code", -1);
+			json.put("retrun_msg", e.getMessage());
 			e.printStackTrace();
 			dh.getSession().rollback();
 			/*에러는 무시하고 롤백만 함.*/	
