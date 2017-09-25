@@ -32,7 +32,7 @@ public class CmAcnoGen {
 		
 		String today = "";
 		GregorianCalendar gc = new GregorianCalendar();
-		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss초 E(a)");
+		SimpleDateFormat sdformat = new SimpleDateFormat("yyyy/ MM/ dd/ HH:mm:ss E(a)");
 		String rtnMsg = "";
 		String sAcno = "";
 		
@@ -105,8 +105,19 @@ public class CmAcnoGen {
 			/********************************************************************
 			 *  예수금잔고조회
 			 ********************************************************************/
+			Map s002Mapout = null;
+			s002Mapout = dh.selectOneSql(dsI000In,namespace+"."+"S002");
 			
-			responseData = dh.selectSql(dsI000In,namespace+"."+"S002");
+			if( s002Mapout == null)
+			{
+				logger.error("계좌잔고 정보가 존재하지 않습니다.");
+				throw new Exception("계좌잔고 정보가 존재하지 않습니다.");
+			}
+			
+			/********************************************************************
+			 *  결과값 설정
+			 ********************************************************************/
+			responseData.putFieldMap(s002Mapout);
 			
 		}catch (Exception e) {
 			e.printStackTrace();

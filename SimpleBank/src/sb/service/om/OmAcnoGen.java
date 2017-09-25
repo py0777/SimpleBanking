@@ -53,7 +53,7 @@ static Logger logger = Logger.getLogger(CmAcnoGen.class);
 		 * Retrun Result Data
 		 *************************************************************/
 		
-		responseData.setOkResultMessage("OK", new String[]{"처리완료되었습니다."});
+		responseData.setOkResultMessage("OK", new String[]{"OK"});
 		
 		return responseData;
 	}
