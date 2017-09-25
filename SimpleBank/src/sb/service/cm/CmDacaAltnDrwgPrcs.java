@@ -160,8 +160,8 @@ public class CmDacaAltnDrwgPrcs
 			responseData.putField("TR_DT", requestData.getField("TR_DT"));
 			responseData.putField("DRWG_ACNO", requestData.getField("DRWG_ACNO"));
 			responseData.putField("DRWG_TR_NO", requestData.getLongField("DRWG_TR_NO"));
-			responseData.putField("DRWG_BF_DACA", cmDacaDrwgRfctDsOut.getLongField("DRWG_BF_DACA"));
-			responseData.putField("DRWG_AF_DACA", cmDacaDrwgRfctDsOut.getLongField("DRWG_AF_DACA"));
+			responseData.putField("DRWG_BF_DACA", cmDacaDrwgRfctDsOut.getLongField("BF_DACA"));
+			responseData.putField("DRWG_AF_DACA", cmDacaDrwgRfctDsOut.getLongField("AF_DACA"));
 			responseData.putField("RCTM_ACNO", requestData.getField("RCTM_ACNO"));
 			responseData.putField("RCTM_TR_NO", requestData.getLongField("RCTM_TR_NO"));
 			responseData.putField("RCTM_BF_DACA", cmDacaRctmRfctDsOut.getLongField("BF_DACA"));
